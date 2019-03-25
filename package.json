@@ -27,6 +27,7 @@
     "@babel/register": "^7.4.0",
     "nodemon": "^1.18.10",
     "coveralls": "^3.0.3",
+    "mocha": "^6.0.2",
     "nyc": "^13.3.0"
   }
 }
