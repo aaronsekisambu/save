@@ -1,5 +1,7 @@
 # Save
 
+[![Coverage Status](https://coveralls.io/repos/github/aaronsekisambu/save/badge.svg?branch=develop)](https://coveralls.io/github/aaronsekisambu/save?branch=develop)
+
 Save is the Loan management system helps in loan provision for new and ongoing engineers, loan repayment management and interest sharing calculation. The system shows information for the contribution made every month and the contributing members.
 
 ## How It Works
