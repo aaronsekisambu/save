@@ -8,6 +8,8 @@
     "build": "babel ./server --out-dir dist",
     "serve": "npm run build && node ./dist/index.js",
     "createdb": "babel-node ./server/config/createTables.js"
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register ./tests --recursive --require babel-polyfill",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -32,5 +34,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "nodemon": "^1.18.10"
+    "coveralls": "^3.0.3",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0"
   }
 }
