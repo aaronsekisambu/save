@@ -1,13 +1,13 @@
 import db from './db';
 
-class Setup{
-    constructor() {
-        this.pool = db.pool;
-        this.createTables();
-    }
+class Setup {
+  constructor() {
+    this.pool = db.pool;
+    this.createTables();
+  }
 
-    async createTables() {
-        const users = `
+  async createTables() {
+    const users = `
         CREATE TABLE IF NOT EXISTS users(
                 userId UUID PRIMARY KEY,
                 firstName VARCHAR(255),
@@ -24,18 +24,21 @@ class Setup{
             );
         `;
 
-        const loans = `
+    const loans = `
             CREATE TABLE IF NOT EXISTS loans(
                 loanId UUID PRIMARY KEY,
                 userId UUID REFERENCES users(userId),
-                guarantor UUID REFERENCES users(userId),
-                amount INTEGER NOT NULL,
-                paymentPeriod INTEGER NOT NULL,
+								guarantor UUID REFERENCES users(userId),
+								amount INTEGER NOT NULL,
+								interest INTEGER NOT NULL,
+								totalAmount INTEGER NOT NULL,
+								paymentPeriod INTEGER NOT NULL,
+								loanStatus TEXT,
                 startDate DATE
             );
         `;
 
-        const transactions = `
+    const transactions = `
             CREATE TABLE IF NOT EXISTS transactions(
                 transactionId UUID PRIMARY KEY,
                 amount INTEGER NOT NULL,
@@ -45,9 +48,9 @@ class Setup{
                 comment  TEXT
             );
         `;
-        await this.pool.query(users).catch(err => console.log(err));
-        await this.pool.query(loans).catch(err => console.log(err));
-        await this.pool.query(transactions).catch(err => console.log(err));
-    }
+    await this.pool.query(users).catch(err => console.log(err));
+    await this.pool.query(loans).catch(err => console.log(err));
+    await this.pool.query(transactions).catch(err => console.log(err));
+  }
 }
- export default new Setup();
+export default new Setup();
