@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node ./server/index.js",
     "build": "babel ./server --out-dir dist",
     "serve": "npm run build && node ./dist/index.js",
-    "createdb": "babel-node ./server/config/createTables.js"
+    "createdb": "babel-node ./server/config/createTables.js",
     "test": "nyc --reporter=html --reporter=text mocha --require @babel/register ./tests --recursive --require babel-polyfill",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
