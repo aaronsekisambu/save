@@ -48,10 +48,10 @@ const createLoan = `
                     (SELECT userId from users WHERE userId = $2),
                     $3,
                     $4,
-										$5,
-										$6,
-										$7,
-									  $8
+                    $5,
+                    $6,
+                    $7,
+                    $8
                     )
             RETURNING *;
     `;
@@ -116,12 +116,12 @@ const createLoansTable = `
     CREATE TABLE IF NOT EXISTS loans(
         loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
         userId UUID REFERENCES users(userId),
-				guarantor UUID REFERENCES users(userId),
-				amount INTEGER NOT NULL,
-				interest INTEGER NOT NULL,
-				totalAmount INTEGER NOT NULL,
-				paymentPeriod INTEGER NOT NULL,
-				loanStatus TEXT,
+        guarantor UUID REFERENCES users(userId),
+        amount INTEGER NOT NULL,
+        interest INTEGER NOT NULL,
+        totalAmount INTEGER NOT NULL,
+        paymentPeriod INTEGER NOT NULL,
+        loanStatus TEXT,
         startDate DATE
             );
         `;
