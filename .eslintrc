@@ -4,6 +4,7 @@
 
   },
   "rules": {
-    "no-undef": "warn"
+    "no-undef": "warn",
+    "func-names": ["error","never"]
   }
 }
