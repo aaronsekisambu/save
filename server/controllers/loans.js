@@ -1,3 +1,4 @@
+// importing the Loan from models
 import loanModel from '../models/loans';
 
 const loan = {

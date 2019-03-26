@@ -28,7 +28,6 @@ class Loan {
       data.paymentPeriod,
       data.loanStatus,
       data.startdate,
-
     ];
 
     try {

@@ -8,5 +8,4 @@ const isValid = params => celebrate(params, { abortEarly: false });
 
 route.post('/api/v1/loan', isValid(loanValidation.payLoan), loanController.payLoan);
 route.post('/api/v1/loan/request', isValid(loanValidation.requestLoan), loanController.requestLoan);
-
 export default route;
