@@ -4,6 +4,8 @@
 
   },
   "rules": {
-    "no-undef": "warn"
+    "no-undef": "warn",
+    "func-names": ["error","never"],
+    "import/no-extraneous-dependencies": "never"
   }
 }
