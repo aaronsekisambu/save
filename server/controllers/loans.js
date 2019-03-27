@@ -4,7 +4,7 @@ const loan = {
 
   /**
    * User should be able to pay a loan
-   * 
+   *
    * @param {Object} req  request body object
    * @param {Array} res   response array
    */
@@ -13,11 +13,10 @@ const loan = {
     const response = await loanModel.payBackLoan(req.body);
     return res.status(200).send({
       status: res.statusCode,
-      data: response
+      data: response,
     });
   },
 
-
-}
+};
 
 export default loan;
