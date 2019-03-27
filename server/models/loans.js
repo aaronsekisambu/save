@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import db from '../config/db';
 import queries from '../config/queries';
-=======
-// impoting the modules
-import db from '../config/db';
->>>>>>> [ch-164831850] creating model for requesting a loan
 
 class Loan {
   constructor() {
