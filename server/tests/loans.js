@@ -4,14 +4,13 @@ import chaiHttp from 'chai-http';
 import db from '../config/createTables';
 import getToken from './baseTest';
 
-const should = chai.should();
-// const expect = chai.expect();
+chai.should();
 
 chai.use(chaiHttp);
 
 describe('Loan', () => {
   let token;
-  // let id;
+  let id;
   before(async () => {
     await db.createTables()
       .then(async () => {
@@ -74,7 +73,6 @@ describe('Loan', () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
-          // res.body.message.should.have();
           done();
         });
     });

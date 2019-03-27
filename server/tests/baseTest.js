@@ -5,7 +5,6 @@ import chaiHttp from 'chai-http';
 chai.use(chaiHttp);
 
 const getToken = () => {
-  let token;
   const user = {
     firstName: 'munaca',
     lastName: 'clintonss',
