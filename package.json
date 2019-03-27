@@ -8,7 +8,7 @@
     "build": "babel ./server --out-dir dist",
     "serve": "npm run build && node ./dist/index.js",
     "createdb": "babel-node ./server/config/createTables.js",
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register ./tests --recursive --require babel-polyfill",
+    "test": "nyc --reporter=text mocha --exit --require @babel/register --require @babel/polyfill ./server/tests/*",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
