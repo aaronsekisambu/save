@@ -11,7 +11,7 @@ class Transaction {
             money.comment
         ];
     try {
-        const saveMoney = await db.pool(`INSERT INTO 
+        const saveMoney = await db.pool.query(`INSERT INTO 
         transactions(transactionId, amount, userId, transactionDate, transactionCode, comment)
         VALUES ($1, $2, $3, $4, $5, $6) returning *`,
         this.savedMoney);
