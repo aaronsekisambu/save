@@ -1,11 +1,17 @@
-// import will go here
-
-// the class for the loan
+import joi from 'joi';
+import uuid from 'uuid/v4';
+import moment from 'moment';
 
 const loan = {
-    // methodes will go here and you need to follow the same method
-     async createLoan () {
-        console.log('the creation of the user')
+
+    /**
+     * User should be able to pay a loan
+     */
+    async payLoan(req, res) {
+        return res.status(200).send({
+            status: res.statusCode,
+            data: ['Hello Guy']
+        });
     }
 }
 
