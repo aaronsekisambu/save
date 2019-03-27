@@ -2,6 +2,7 @@
 import loanModel from '../models/loans';
 
 const loan = {
+<<<<<<< HEAD
   // methodes will go here and you need to follow the same method
   async requestLoan(req, res) {
     await loanModel.requestLoan(req.body)
