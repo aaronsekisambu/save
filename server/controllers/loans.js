@@ -1,18 +1,23 @@
-import joi from 'joi';
-import uuid from 'uuid/v4';
-import moment from 'moment';
+import loanModel from '../models/loans';
 
 const loan = {
 
-    /**
-     * User should be able to pay a loan
-     */
-    async payLoan(req, res) {
-        return res.status(200).send({
-            status: res.statusCode,
-            data: ['Hello Guy']
-        });
-    }
+  /**
+   * User should be able to pay a loan
+   * 
+   * @param {Object} req  request body object
+   * @param {Array} res   response array
+   */
+
+  async payLoan(req, res) {
+    const response = await loanModel.payBackLoan(req.body);
+    return res.status(200).send({
+      status: res.statusCode,
+      data: response
+    });
+  },
+
+
 }
 
 export default loan;

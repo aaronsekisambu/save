@@ -118,12 +118,17 @@ const createTransactionsTable = `
             );
         `;
 
+const payBackLoan = `
+        
+        `;
+
 const dropTables = `
            DROP TABLE IF EXISTS 
            users,loans,transactions;
     `;
 
 export default {
+  payBackLoan,
   createUser,
   getUser,
   deleteUser,
