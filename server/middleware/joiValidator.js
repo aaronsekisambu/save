@@ -1,7 +1,7 @@
-import { celebrate } from 'celebrate';
+import { isCelebrate } from 'celebrate';
 
 const joiErrors = (err, req, res, next) => {
-  if (celebrate(err)) {
+  if (isCelebrate(err)) {
     const errors = [];
     err.details.forEach(error => {
       errors.push(error.message.split('"').join(''));
