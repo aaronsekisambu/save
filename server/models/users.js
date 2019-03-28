@@ -17,7 +17,7 @@ class User {
     try {
       const user = await db.pool.query(queries.getUserByEmail, [email]);
       return user;
-       } catch (error) {
+    } catch (error) {
       return error;
     }
   }
@@ -32,8 +32,8 @@ class User {
   }
 
   async approveUser(data) {
-  	this.id = data.id;
-  	try{
+    this.id = data.id;
+    try {
   		return await db.executeQuery(queries.approveUser, [this.id]);
   	} catch (error) {
   		return error;
