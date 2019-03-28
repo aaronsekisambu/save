@@ -1,10 +1,16 @@
-// import the modules
-class User {
+import db from '../config/db';
+import queries from '../config/queries';
 
-  
-    async createUser(data) {
-        console.log('User');
+class User {
+  async deleteUser(data) {
+    const { id } = data;
+    try {
+      const { rows, row } = await db.executeQuery(queries.deleteUser, [id]);
+      return rows;
+    } catch (error) {
+      return error;
     }
   }
-  
-  export default new User();
+}
+
+export default new User();
