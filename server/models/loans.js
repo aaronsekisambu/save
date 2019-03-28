@@ -8,11 +8,11 @@ class Loan {
 
   async payBackLoan(data) {
     const {
-      userId, loanId, guarantor, amount, paymentPeriod,
+      userId, amount, transactionDate, transactionCode, comment,
     } = data;
-    const params = [userId, loanId, guarantor, amount, paymentPeriod];
+    const params = [userId, amount, transactionDate, transactionCode, comment];
     try {
-      return await this.pool.query(queries.payBackLoan, params);
+      return await this.pool.query(queries.createTransaction, params);
     } catch (error) {
       return error;
     }
