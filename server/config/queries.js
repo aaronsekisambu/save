@@ -1,19 +1,27 @@
 const createUser = `
-        INSERT INTO users (
-                firstName,
-                lastName,
-                employmentDate,
-                membershipDate,
-                nationality,
-                phoneNumber,
-                email,
-                profileImage,
-                slackHandle,
-                salt,
-                hash
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+    INSERT INTO users (
+      email,
+      salt,
+      hash
+    ) VALUES ($1,$2,$3)
+    RETURNING *;
+  `;
+
+const updateUser = `
+        UPDATE users SET 
+                firstName = $1,
+                lastName = $2,
+                employmentDate = $3,
+                membershipDate = $4,
+                nationality = $5,
+                phoneNumber = $6,
+                email = $7,
+                profileImage = $8,
+                slackHandle = $9,
+                salt = $10,
+                hash = $11
+           WHERE userId = $12
            RETURNING *; 
-            
     `;
 
 const getUser = `
@@ -81,14 +89,14 @@ const getSingleTransaction = `
 
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
-                userId UUID PRIMARY KEY,
+                userId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
                 firstName VARCHAR(255),
                 lastName VARCHAR(255),
                 employmentDate DATE,
                 membershipDate DATE,
                 nationality VARCHAR(50),
                 phoneNumber INTEGER,
-                email VARCHAR(255),
+                email VARCHAR(255) UNIQUE,
                 profileImage VARCHAR(255),
                 slackHandle VARCHAR(50),
                 salt TEXT,
@@ -98,7 +106,7 @@ const createUserTable = `
 
 const createLoansTable = `
             CREATE TABLE IF NOT EXISTS loans(
-                loanId UUID PRIMARY KEY,
+                loanId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
                 userId UUID REFERENCES users(userId),
                 guarantor UUID REFERENCES users(userId),
                 amount INTEGER NOT NULL,
@@ -109,7 +117,7 @@ const createLoansTable = `
 
 const createTransactionsTable = `
             CREATE TABLE IF NOT EXISTS transactions(
-                transactionId UUID PRIMARY KEY,
+                transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
                 amount INTEGER NOT NULL,
                 userId UUID REFERENCES users(userId),
                 transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -125,6 +133,7 @@ const dropTables = `
 
 export default {
   createUser,
+  updateUser,
   getUser,
   deleteUser,
   createLoan,

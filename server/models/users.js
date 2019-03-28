@@ -1,10 +1,16 @@
-// import the modules
-class User {
+import db from '../config/db';
+import queries from '../config/queries';
 
-  
-    async createUser(data) {
-        console.log('User');
+class User {
+  static async createUser(data) {
+    const { email, salt, hash } = data;
+    try {
+      const user = await db.pool.query(queries.createUser, [email, salt, hash]);
+      return user;
+    } catch (error) {
+      return error;
     }
   }
-  
-  export default new User();
+}
+
+export default User;

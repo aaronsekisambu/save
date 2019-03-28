@@ -18,7 +18,10 @@
   "author": "Kgl-Avengers group",
   "license": "ISC",
   "dependencies": {
+    "celebrate": "^9.1.0",
     "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^7.9.0",
     "uuid": "^3.3.2"
   },
