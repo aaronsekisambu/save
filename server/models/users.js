@@ -3,10 +3,9 @@ import queries from '../config/queries';
 
 class User {
   async deleteUser(data) {
-    const { id } = data;
+    this.id = data.id;
     try {
-      const { rows, row } = await db.executeQuery(queries.deleteUser, [id]);
-      return rows;
+      return await db.executeQuery(queries.deleteUser, [this.id]);
     } catch (error) {
       return error;
     }

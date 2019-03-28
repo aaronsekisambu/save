@@ -22,7 +22,7 @@ const getUser = `
     `;
 
 const deleteUser = `
-        DELETE * FROM users
+        DELETE FROM users
         WHERE userId = $1;
     `;
 const createLoan = `

@@ -7,3 +7,5 @@ const router = express.Router();
 const isValid = params => celebrate(params, ({ abortEarly: false }));
 
 router.delete('/api/v1/user/:id', isValid(userValidation.deleteUser), userController.deleteUser);
+
+export default router;
