@@ -68,10 +68,10 @@ const createTransaction = `
                 comment
             ) VALUES (
                 (SELECT userId from users WHERE userId = $1),
-                $1,
                 $2,
                 $3,
-                $4) 
+                $4,
+                $5) 
             RETURNING *; 
     `;
 const getSingleTransaction = `

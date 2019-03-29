@@ -10,6 +10,7 @@ const Transaction = {
     await transcat.saveMoney(saved)
       .then((save) => {
         if (!save) {
+            console.log(save);
           res.status(400).send({
             status: res.statusCode,
             data: [{
