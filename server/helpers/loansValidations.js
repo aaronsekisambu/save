@@ -24,7 +24,14 @@ const requestLoan = {
   },
 };
 
+const approveLoan = {
+  body: {
+    loanStatus: Validate.Joi.string().required().trim(),
+  },
+};
+
 export default {
   payLoan,
   requestLoan,
+  approveLoan,
 };
