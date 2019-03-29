@@ -12,6 +12,16 @@ class User {
     }
   }
 
+
+  static async getUser(email) {
+    try {
+      const user = await db.pool.query(queries.getUserByEmail, [email]);
+      return user;
+       } catch (error) {
+      return error;
+    }
+  }
+
   async deleteUser(data) {
     this.id = data.id;
     try {

@@ -14,4 +14,8 @@ router.delete('/api/v1/user/:id',
   isValid(userValidation.deleteUser),
   userController.deleteUser);
 
+router.post('/api/v1/auth/login',
+  isValid(validation.userLogin),
+  controller.userLogin);
+
 export default router;

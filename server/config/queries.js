@@ -4,7 +4,7 @@ const createUser = `
       salt,
       hash
     ) VALUES ($1,$2,$3)
-    RETURNING *;
+    RETURNING userId,email;
   `;
 
 const updateUser = `
@@ -27,6 +27,10 @@ const updateUser = `
 const getUser = `
         SELECT * FROM users
         where userId = $1;
+    `;
+const getUserByEmail = `
+        SELECT * FROM users
+        where email = $1;
     `;
 
 const deleteUser = `
@@ -146,6 +150,7 @@ export default {
   createUser,
   updateUser,
   getUser,
+  getUserByEmail,
   deleteUser,
   createLoan,
   getSingleUserLoan,
