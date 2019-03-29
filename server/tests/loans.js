@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe('Loan', () => {
   let token;
-  // let id;
+  let id;
   before(async () => {
     await db.createTables()
       .then(async () => {
@@ -34,7 +34,7 @@ describe('Loan', () => {
     }
   });
 
-  // get all office
+  // request a Loan
   describe('/POST', () => {
     it('should request the loan', (done) => {
       const loan = {
@@ -70,6 +70,40 @@ describe('Loan', () => {
 
       chai.request('http://localhost:3000')
         .post('/api/v1/loan/request')
+        .send(loan)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          // res.body.message.should.have();
+          done();
+        });
+    });
+  });
+
+  // Admin approve Loan
+  describe('/UPDATE', () => {
+    it('should change the loan status', (done) => {
+      const loanApprove = {
+        loanStatus: 'approved',
+      };
+
+      chai.request('http://localhost:3000')
+        .post(`/api/v1/loan/approved/${id}`)
+        .send(loanApprove)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          done();
+        });
+    });
+
+    it('should not approve the loan with invalid id', (done) => {
+      const loan = {
+        loanStatus: 'approved',
+      };
+
+      chai.request('http://localhost:3000')
+        .post('/api/v1/loan/approve/ndnd')
         .send(loan)
         .end((err, res) => {
           res.should.have.status(400);
