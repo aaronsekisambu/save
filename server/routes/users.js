@@ -18,12 +18,4 @@ router.post('/api/v1/auth/login',
   isValid(validation.userLogin),
   controller.userLogin);
 
-// router.put('/api/v1/auth/profile',
-//   isValid(validation.userSignup),
-//   controller.createUser);
-//
-// router.get('/api/v1/auth/profile',
-//   isValid(validation.userSignup),
-//   controller.createUser);
-
 export default router;
