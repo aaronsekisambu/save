@@ -23,7 +23,7 @@ const user = {
     }
     const message = (response.code === '23505') ? `email ${req.body.email} already exists` : response.detail;
     res.status(400).json({
-      status: 400,
+      status: res.statusCode,
       error: message,
     });
   },
