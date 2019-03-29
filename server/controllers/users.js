@@ -1,12 +1,21 @@
-// import will go here
-
-// the class for the user
+import userModel from '../models/users';
 
 const user = {
-    // methodes will go here and you need to follow the same method
-    async createUser () {
-        console.log('the creation of the user')
+  async deleteUser(req, res) {
+    const {
+      rowCount,
+    } = await userModel.deleteUser(req.params);
+    if (rowCount !== 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        message: 'User deleted successfuly from members',
+      });
     }
-}
+    return res.status(404).send({
+      status: res.statusCode,
+      message: 'User not found',
+    });
+  },
+};
 
 export default user;

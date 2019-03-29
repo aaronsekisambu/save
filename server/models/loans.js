@@ -2,17 +2,14 @@ import db from '../config/db';
 import queries from '../config/queries';
 
 class Loan {
-  constructor() {
-    this.pool = db.pool;
-  }
-
   async payBackLoan(data) {
     const {
       userId, amount, transactionDate, transactionCode, comment,
     } = data;
-    const params = [userId, amount, transactionDate, transactionCode, comment];
+    this.params = [userId, amount, transactionDate, transactionCode, comment];
     try {
-      return await this.pool.query(queries.createTransaction, params);
+      const { rows } = await db.executeQuery(queries.createTransaction, this.params);
+      return rows;
     } catch (error) {
       return error;
     }
