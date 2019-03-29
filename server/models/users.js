@@ -12,9 +12,9 @@ class User {
     }
   }
 
-  static async userLogin(email) {
+  static async getUser(email) {
     try {
-      const user = await db.pool.query(queries.getUser, [email]);
+      const user = await db.pool.query(queries.getUserByEmail, [email]);
       return user;
     } catch (error) {
       return error;

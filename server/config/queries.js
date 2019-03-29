@@ -28,6 +28,10 @@ const getUser = `
         SELECT * FROM users
         where userId = $1;
     `;
+const getUserByEmail = `
+        SELECT * FROM users
+        where email = $1;
+    `;
 
 const deleteUser = `
         DELETE * FROM users
@@ -135,6 +139,7 @@ export default {
   createUser,
   updateUser,
   getUser,
+  getUserByEmail,
   deleteUser,
   createLoan,
   getSingleUserLoan,

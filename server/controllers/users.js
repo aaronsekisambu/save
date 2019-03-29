@@ -28,10 +28,43 @@ const user = {
     });
   },
 
-  async userLogin(req,res) {
-    const {email, password} = req.body;
-    const user = await userModel.userLogin()
-  }
+  async userLogin(req, res) {
+    const { email, password } = req.body;
+    const response = await userModel.getUser(email);
+
+    if (!(response.rowCount === 1)) {
+      res.status(400).json({
+        status: res.statusCode,
+        error: `user with email ${email} not found`,
+      });
+      return;
+    }
+
+    const { salt, hash, userId } = response.rows[0];
+    const currentHash = crypto.pbkdf2Sync(
+      password,
+      salt,
+      1000,
+      64,
+      'sha512',
+    ).toString('hex');
+
+    if (hash === currentHash) {
+      const token = auth.generateToken({ email, password, userId });
+      res.status(200).json({
+        status: res.statusCode,
+        token,
+        email,
+        userId,
+      });
+      return;
+    }
+
+    res.status(400).json({
+      status: res.statusCode,
+      error: 'incorrect password',
+    });
+  },
 };
 
 export default user;
