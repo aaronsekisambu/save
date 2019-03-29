@@ -1,12 +1,12 @@
 import express from 'express';
 import { celebrate } from 'celebrate';
-import Controller from '../controllers/loans';
-import validation from '../helpers/loansValidations';
+import loanController from '../controllers/loans';
+import loanValidation from '../helpers/loansValidations';
 
 const route = express.Router();
 const isValid = params => celebrate(params, { abortEarly: false });
 
-route.post('/api/v1/loan', isValid(validation.payLoan), Controller.payLoan);
-route.post('/api/v1/loan/request',isValid(validation.requestLoan), Controller.requestLoan);
+route.post('/api/v1/loan', isValid(loanValidation.payLoan), loanController.payLoan);
+route.post('/api/v1/loan/request', isValid(loanValidation.requestLoan), loanController.requestLoan);
 
 export default route;
