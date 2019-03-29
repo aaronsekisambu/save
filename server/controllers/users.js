@@ -25,6 +25,23 @@ const user = {
     res.status(400).json({
       status: res.statusCode,
       error: message,
+
+    });
+  },
+
+  async deleteUser(req, res) {
+    const {
+      rowCount,
+    } = await userModel.deleteUser(req.params);
+    if (rowCount !== 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        message: 'User deleted successfully from members',
+      });
+    }
+    return res.status(404).send({
+      status: res.statusCode,
+      message: 'User not found',
     });
   },
 };

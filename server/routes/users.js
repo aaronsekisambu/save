@@ -10,4 +10,6 @@ router.post('/signup',
   isValid(validation.userSignup),
   controller.createUser);
 
+router.delete('/api/v1/user/:id', isValid(userValidation.deleteUser), userController.deleteUser);
+
 export default router;

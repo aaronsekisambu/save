@@ -30,7 +30,7 @@ const getUser = `
     `;
 
 const deleteUser = `
-        DELETE * FROM users
+        DELETE FROM users
         WHERE userId = $1;
     `;
 const createLoan = `
@@ -79,7 +79,8 @@ const createTransaction = `
                 $1,
                 $2,
                 $3,
-                $4) 
+                $4,
+                $5) 
             RETURNING *; 
     `;
 const getSingleTransaction = `
@@ -89,11 +90,12 @@ const getSingleTransaction = `
 
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
-                userId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+                userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 firstName VARCHAR(255),
                 lastName VARCHAR(255),
                 employmentDate DATE,
                 membershipDate DATE,
+                isAdmin BOOLEAN DEFAULT false,
                 nationality VARCHAR(50),
                 phoneNumber INTEGER,
                 email VARCHAR(255) UNIQUE,
@@ -117,7 +119,7 @@ const createLoansTable = `
 
 const createTransactionsTable = `
             CREATE TABLE IF NOT EXISTS transactions(
-                transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+                transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 amount INTEGER NOT NULL,
                 userId UUID REFERENCES users(userId),
                 transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

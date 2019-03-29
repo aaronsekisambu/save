@@ -11,6 +11,15 @@ class User {
       return error;
     }
   }
+
+  async deleteUser(data) {
+    this.id = data.id;
+    try {
+      return await db.executeQuery(queries.deleteUser, [this.id]);
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
-export default User;
+export default new User();
