@@ -1,10 +1,8 @@
 // import the modules
 class User {
-
-  
-    async createUser(data) {
-        console.log('User');
-    }
+  async createUser(data) {
+    console.log('User');
   }
-  
-  export default new User();
+}
+
+export default new User();
