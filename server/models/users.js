@@ -11,6 +11,15 @@ class User {
       return error;
     }
   }
+
+  static async userLogin(email) {
+    try {
+      const user = await db.pool.query(queries.getUser, [email]);
+      return user;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default User;

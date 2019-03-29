@@ -27,6 +27,11 @@ const user = {
       error: message,
     });
   },
+
+  async userLogin(req,res) {
+    const {email, password} = req.body;
+    const user = await userModel.userLogin()
+  }
 };
 
 export default user;

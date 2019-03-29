@@ -4,7 +4,7 @@ const createUser = `
       salt,
       hash
     ) VALUES ($1,$2,$3)
-    RETURNING *;
+    RETURNING userId,email;
   `;
 
 const updateUser = `
