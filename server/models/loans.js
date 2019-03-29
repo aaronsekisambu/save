@@ -27,23 +27,12 @@ class Loan {
       data.totalAmount,
       data.paymentPeriod,
       data.loanStatus,
+      data.startdate,
 
     ];
 
     try {
-      const requestLoan = await db.pool.query(`INSERT INTO 
-			loans(
-				"userid",
-				"guarantor",
-				"amount",
-				"interest",
-				"totalamount",
-				"paymentperiod",
-				"loanstatus",
-				"startdate"
-			) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-			returning *`,
-      this.newLoan);
+      const requestLoan = await db.pool.query(queries.createLoan, this.newLoan);
       return requestLoan.rows[0];
     } catch (error) {
       console.log(error);

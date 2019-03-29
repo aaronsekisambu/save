@@ -10,6 +10,21 @@ const payLoan = {
   },
 };
 
+// validating the requesting loan endpoint
+const requestLoan = {
+  body: {
+    userId: Validate.Joi.string().uuid().required().trim(),
+    guarantor: Validate.Joi.string().required().trim(),
+    amount: Validate.Joi.number().required(),
+    interest: Validate.Joi.number(),
+    totalAmount: Validate.Joi.number(),
+    paymentPeriod: Validate.Joi.number(),
+    loanStatus: Validate.Joi.string(),
+    startdate: Validate.Joi.date(),
+  },
+};
+
 export default {
   payLoan,
+  requestLoan,
 };
