@@ -4,7 +4,6 @@ import joiErrors from './middleware/joiValidator';
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(loans);
 const PORT = process.env.PORT || 3000;

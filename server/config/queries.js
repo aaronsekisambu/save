@@ -36,15 +36,15 @@ const createLoan = `
           "loanstatus",
           "startdate"
              ) VALUES (
-                    (SELECT userId from users WHERE userId = $1),
-                    (SELECT userId from users WHERE userId = $2),
-                    $3,
-                    $4,
-																				$5,
-																				$6,
-																				$7,
-																				$8
-                    )
+              (SELECT userId from users WHERE userId = $1),
+              (SELECT userId from users WHERE userId = $2),
+              $3,
+              $4,
+              $5,
+              $6,
+              $7,
+              $8
+              )
             RETURNING *;
     `;
 
@@ -57,14 +57,14 @@ const getUserLoans = `
 const getSingleUserLoan = `
         SELECT * FROM loans
         WHERE loanId = $1 AND userId = (SELECT userId from users WHERE userId = $2);
-				`;
+        `;
 const getLoan = `
-								SELECT * FROM loans
-								where loanId = $1
+          SELECT * FROM loans
+          where loanId = $1
 `;
 const changeLoanStatus = `
-								UPDATE loans
-								SET loanStatus=$1 WHERE loanId=$2 returning *`;
+          UPDATE loans
+          SET loanStatus=$1 WHERE loanId=$2 returning *`;
 const getUserSavings = `
         SELECT * FROM transactions
         WHERE userId = (SELECT userId from users WHERE userId = $1)
@@ -73,23 +73,23 @@ const getUserSavings = `
     `;
 const createTransaction = `
         INSERT INTO transactions (
-                userId,
-                amount,
-                transactionDate,
-                transactionCode,
-                comment
-            ) VALUES (
-                (SELECT userId from users WHERE userId = $1),
-                $1,
-                $2,
-                $3,
-                $4) 
-            RETURNING *; 
-				`;
+           userId,
+           amount,
+           transactionDate,
+           transactionCode,
+           comment
+           ) VALUES (
+           (SELECT userId from users WHERE userId = $1),
+           $1,
+           $2,
+           $3,
+           $4) 
+           RETURNING *; 
+           `;
 const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
-				`;
+        `;
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
                 userId UUID PRIMARY KEY,
@@ -109,15 +109,15 @@ const createUserTable = `
 
 const createLoansTable = `
     CREATE TABLE IF NOT EXISTS loans(
-    loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    userId UUID REFERENCES users(userId),
-				guarantor UUID REFERENCES users(userId),
-				amount INTEGER NOT NULL,
-				interest INTEGER NOT NULL,
-				totalAmount INTEGER NOT NULL,
-				paymentPeriod INTEGER NOT NULL,
-				loanStatus TEXT,
-    startDate DATE
+      loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      userId UUID REFERENCES users(userId),
+      guarantor UUID REFERENCES users(userId),
+      amount INTEGER NOT NULL,
+      interest INTEGER NOT NULL,
+      totalAmount INTEGER NOT NULL,
+      paymentPeriod INTEGER NOT NULL,
+      loanStatus TEXT,
+      startDate DATE
             );
         `;
 
