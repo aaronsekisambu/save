@@ -67,6 +67,7 @@ const createTransaction = `
                 transactionCode,
                 comment
             ) VALUES (
+                (SELECT userId from users WHERE userId = $1),
                 $1,
                 $2,
                 $3,
