@@ -82,6 +82,23 @@ const user = {
       error: 'incorrect password',
     });
   },
+
+  async approveUser(req, res) {    const {
+      rowCount,
+    } = await userModel.approveUser(req.params);
+    if (rowCount !== 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        message: 'Membership approved',
+      });
+    }
+    
+    return res.status(404).send({
+      status: res.statusCode,
+      message: 'User not found',
+    });
+
+  }
 };
 
 export default user;

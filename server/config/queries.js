@@ -23,6 +23,12 @@ const updateUser = `
            WHERE userId = $12
            RETURNING *; 
     `;
+const approveUser = `
+    UPDATE users 
+    SET membershipDate = now()
+    WHERE userId = $1
+    RETURNING *;
+    `
 
 const getUser = `
         SELECT * FROM users
@@ -149,6 +155,7 @@ const dropTables = `
 export default {
   createUser,
   updateUser,
+  approveUser,
   getUser,
   getUserByEmail,
   deleteUser,

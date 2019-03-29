@@ -18,4 +18,8 @@ router.post('/api/v1/auth/login',
   isValid(validation.userLogin),
   controller.userLogin);
 
+router.patch('/api/v1/user/:id/approve',
+  isValid(userValidation.deleteUser),
+  userController.approveUser);
+
 export default router;

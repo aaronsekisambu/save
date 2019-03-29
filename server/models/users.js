@@ -30,6 +30,15 @@ class User {
       return error;
     }
   }
+
+  async approveUser(data) {
+  	this.id = data.id;
+  	try{
+  		return await db.executeQuery(queries.approveUser, [this.id]);
+  	} catch (error) {
+  		return error;
+  	}
+  }
 }
 
 export default new User();
