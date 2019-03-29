@@ -6,7 +6,7 @@ import userValidation from '../helpers/validations';
 const router = express.Router();
 const isValid = params => celebrate(params, { abortEarly: false });
 
-router.post('/signup',
+router.post('/api/v1/auth/signup',
   isValid(userValidation.userSignup),
   userController.createUser);
 

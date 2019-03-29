@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(save);
 app.use(loans);
 app.use(userRoute);
-app.use('/api/v1/auth', userRoute);
+
 /**
  * Error validation middleware has to be at the end of all routes
  */
