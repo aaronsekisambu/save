@@ -9,7 +9,6 @@ class Database {
     this.pool = new Pool({
       connectionString: this.connectionString,
     });
-
     this.pool.on('connect', () => console.log('Database is connected......'));
     this.pool.on('error', error => console.error(error));
     this.pool.on('remove', () => console.log('client removed'));
