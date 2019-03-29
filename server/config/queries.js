@@ -1,6 +1,6 @@
 const createUser = `
 	INSERT INTO users (
-	  email,
+		email,
 	  salt,
 	  hash
 	) VALUES ($1,$2,$3)
@@ -86,16 +86,16 @@ const getUserSavings = `
 		ORDER BY transactionDate DESC;
 	`;
 const createTransaction = `
-		INSERT INTO transactions (
-				userId,
-				amount,
-				transactionDate,
-				transactionCode,
-				comment
-			) VALUES (
-				(SELECT userId from users WHERE userId = $1),
-				$1,
-				$2,
+  INSERT INTO transactions (
+      userId,
+      amount,
+      transactionDate,
+      transactionCode,
+      comment
+      ) VALUES (
+        (SELECT userId from users WHERE userId = $1),
+        $1,
+        $2,
 				$3,
 				$4,
 				$5) 
