@@ -1,10 +1,22 @@
-// import goes here
-class Loan {
+import db from '../config/db';
+import queries from '../config/queries';
 
-  
-    async requestLoan(data) {
-        console.log('loan');
+class Loan {
+  constructor() {
+    this.pool = db.pool;
+  }
+
+  async payBackLoan(data) {
+    const {
+      userId, amount, transactionDate, transactionCode, comment,
+    } = data;
+    const params = [userId, amount, transactionDate, transactionCode, comment];
+    try {
+      return await this.pool.query(queries.createTransaction, params);
+    } catch (error) {
+      return error;
     }
   }
-  
-  export default new Loan();
+}
+
+export default new Loan();
