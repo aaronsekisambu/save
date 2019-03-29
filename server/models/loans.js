@@ -17,6 +17,28 @@ class Loan {
       return error;
     }
   }
+
+  async requestLoan(data) {
+    this.newLoan = [
+      data.userId,
+      data.guarantor,
+      data.amount,
+      data.interest,
+      data.totalAmount,
+      data.paymentPeriod,
+      data.loanStatus,
+      data.startdate,
+
+    ];
+
+    try {
+      const requestLoan = await db.pool.query(queries.createLoan, this.newLoan);
+      return requestLoan.rows[0];
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
 
 export default new Loan();

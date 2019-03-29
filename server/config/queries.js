@@ -34,22 +34,28 @@ const getUserByEmail = `
     `;
 
 const deleteUser = `
-        DELETE * FROM users
+        DELETE FROM users
         WHERE userId = $1;
     `;
 const createLoan = `
         INSERT INTO loans (
-                userId, 
-                guarantor,
-                amount,
-                startDate,
-                paymentPeriod,
+          "userid",
+          "guarantor",
+          "amount",
+          "interest",
+          "totalamount",
+          "paymentperiod",
+          "loanstatus",
+          "startdate"
              ) VALUES (
                     (SELECT userId from users WHERE userId = $1),
                     (SELECT userId from users WHERE userId = $2),
                     $3,
                     $4,
-                    $5
+                    $5,
+                    $6,
+                    $7,
+                    $8
                     )
             RETURNING *;
     `;
@@ -83,7 +89,8 @@ const createTransaction = `
                 $1,
                 $2,
                 $3,
-                $4) 
+                $4,
+                $5) 
             RETURNING *; 
     `;
 const getSingleTransaction = `
@@ -93,11 +100,12 @@ const getSingleTransaction = `
 
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
-                userId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+                userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 firstName VARCHAR(255),
                 lastName VARCHAR(255),
                 employmentDate DATE,
                 membershipDate DATE,
+                isAdmin BOOLEAN DEFAULT false,
                 nationality VARCHAR(50),
                 phoneNumber INTEGER,
                 email VARCHAR(255) UNIQUE,
@@ -109,19 +117,22 @@ const createUserTable = `
         `;
 
 const createLoansTable = `
-            CREATE TABLE IF NOT EXISTS loans(
-                loanId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
-                userId UUID REFERENCES users(userId),
-                guarantor UUID REFERENCES users(userId),
-                amount INTEGER NOT NULL,
-                paymentPeriod INTEGER NOT NULL,
-                startDate DATE
+    CREATE TABLE IF NOT EXISTS loans(
+        loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        userId UUID REFERENCES users(userId),
+        guarantor UUID REFERENCES users(userId),
+        amount INTEGER NOT NULL,
+        interest INTEGER NOT NULL,
+        totalAmount INTEGER NOT NULL,
+        paymentPeriod INTEGER NOT NULL,
+        loanStatus TEXT,
+        startDate DATE
             );
         `;
 
 const createTransactionsTable = `
             CREATE TABLE IF NOT EXISTS transactions(
-                transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v1(),
+                transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 amount INTEGER NOT NULL,
                 userId UUID REFERENCES users(userId),
                 transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
