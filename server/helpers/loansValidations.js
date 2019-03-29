@@ -2,7 +2,7 @@ import Validate from 'celebrate';
 
 const payLoan = {
   body: {
-    userId: Validate.Joi.string().required().trim(),
+    userId: Validate.Joi.string().uuid().required().trim(),
     amount: Validate.Joi.number().required(),
     transactionDate: Validate.Joi.date().required(),
     transactionCode: Validate.Joi.string().required().trim(),
