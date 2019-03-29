@@ -81,7 +81,7 @@ const getSingleTransaction = `
 
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
-                userId UUID PRIMARY KEY,
+                userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 firstName VARCHAR(255),
                 lastName VARCHAR(255),
                 employmentDate DATE,
@@ -98,7 +98,7 @@ const createUserTable = `
 
 const createLoansTable = `
             CREATE TABLE IF NOT EXISTS loans(
-                loanId UUID PRIMARY KEY,
+                loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 userId UUID REFERENCES users(userId),
                 guarantor UUID REFERENCES users(userId),
                 amount INTEGER NOT NULL,
@@ -109,7 +109,7 @@ const createLoansTable = `
 
 const createTransactionsTable = `
             CREATE TABLE IF NOT EXISTS transactions(
-                transactionId UUID PRIMARY KEY,
+                transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 amount INTEGER NOT NULL,
                 userId UUID REFERENCES users(userId),
                 transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
