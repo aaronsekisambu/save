@@ -57,8 +57,14 @@ const getUserLoans = `
 const getSingleUserLoan = `
         SELECT * FROM loans
         WHERE loanId = $1 AND userId = (SELECT userId from users WHERE userId = $2);
-    `;
-
+				`;
+const getLoan = `
+								SELECT * FROM loans
+								where loanId = $1
+`;
+const changeLoanStatus = `
+								UPDATE loans
+								SET loanStatus=$1 WHERE loanId=$2 returning *`;
 const getUserSavings = `
         SELECT * FROM transactions
         WHERE userId = (SELECT userId from users WHERE userId = $1)
@@ -79,12 +85,11 @@ const createTransaction = `
                 $3,
                 $4) 
             RETURNING *; 
-    `;
+				`;
 const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
-    `;
-
+				`;
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
                 userId UUID PRIMARY KEY,
@@ -139,6 +144,8 @@ export default {
   createLoan,
   getSingleUserLoan,
   getUserLoans,
+  getLoan,
+  changeLoanStatus,
   getUserSavings,
   createTransaction,
   getSingleTransaction,

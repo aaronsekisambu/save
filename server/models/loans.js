@@ -39,6 +39,33 @@ class Loan {
       return false;
     }
   }
+
+  /*
+  * @param {id} id
+  * @ returns {Object} loan object
+  */
+  async findLoan(id) {
+    try {
+      const findSingleLoan = await this.pool.query(queries.getLoan, [id]);
+      return findSingleLoan;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  /*
+  * @param {uuid} id
+  * @param {Object} data
+  */
+  async approveLoan(data) {
+    try {
+      const approveLoans = await this.pool.query(queries.changeLoanStatus, data);
+      return approveLoans.rows[0];
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
 }
 
 export default new Loan();
