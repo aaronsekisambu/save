@@ -10,15 +10,16 @@ router.post('/api/v1/auth/signup',
   isValid(userValidation.userSignup),
   userController.createUser);
 
-router.delete('/api/v1/user/:id',
+router.delete('/api/v1/users/:id',
   isValid(userValidation.deleteUser),
   userController.deleteUser);
+
 
 router.post('/api/v1/auth/login',
   isValid(validation.userLogin),
   controller.userLogin);
 
-router.patch('/api/v1/user/:id/approve',
+router.patch('/api/v1/users/:id/approve',
   isValid(userValidation.deleteUser),
   userController.approveUser);
 

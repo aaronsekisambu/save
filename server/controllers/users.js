@@ -88,6 +88,7 @@ const user = {
 		const {
 			rowCount,
 		} = await userModel.approveUser(req.params);
+
 		if (rowCount !== 0) {
 			return res.status(200).send({
 				status: res.statusCode,
