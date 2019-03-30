@@ -16,8 +16,8 @@ router.delete('/api/v1/users/:id',
 
 
 router.post('/api/v1/auth/login',
-  isValid(validation.userLogin),
-  controller.userLogin);
+  isValid(userValidation.userLogin),
+  userController.userLogin);
 
 router.patch('/api/v1/users/:id/approve',
   isValid(userValidation.deleteUser),
