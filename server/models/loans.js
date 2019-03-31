@@ -61,10 +61,9 @@ class Loan {
   }
 
   async checkLoanStatus(data) {
-    this.loanId = [data.id];
     try {
-      const loanStatus = await db.executeQuery(queries.createTransactionsTable, this.loanId);
-      return loanStatus.rows[0];
+      this.loanStatus = await db.executeQuery(queries.getSingleUserLoan, data);
+      return this.loanStatus.rows[0];
     } catch (error) {
       return error;
     }

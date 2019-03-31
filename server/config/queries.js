@@ -140,7 +140,9 @@ const createLoansTable = `
 		loanStatus TEXT,
 		startDate DATE
 			);
-		`;
+    `;
+
+
 
 const createTransactionsTable = `
 			CREATE TABLE IF NOT EXISTS transactions(

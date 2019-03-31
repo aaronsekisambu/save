@@ -36,7 +36,9 @@ const loan = {
   },
 
   async checkLoanStatus(req, res) {
-    const response = await Loan.checkLoanStatus(req.body);
+    const { userId } = req.body;
+    const { id } = req.params;
+    const response = await Loan.checkLoanStatus([id, userId]);
     return res.status(200).send({
       status: res.statusCode,
       data: response,
