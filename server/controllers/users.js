@@ -102,7 +102,7 @@ const user = {
 		});
 	},
 
-    async getDetails(req, res) {    
+    async getDetails(req, res) {
     const response = await userModel.getUserDetails(req.params.id);
     const loans = await userModel.getUserLoans(req.params.id);
     const transaction = await userModel.getUserTransactions(req.params.id);
@@ -113,11 +113,12 @@ const user = {
       if (loans.rowCount !== 0) {
         userLoans = loans.rows[0];
       }
+
       let userTransactions = "No transaction record found";
       if(transaction.rowCount !== 0) {
         userTransactions = transaction.rows[0];
       }
-      
+
       return res.status(200).send({
         status: res.statusCode,
         user: user,
@@ -130,7 +131,7 @@ const user = {
       status: res.statusCode,
       message: 'User not found',
     });
-  },
+  }
 
   async getUserLoans(req, res) {
     const loans = await userModel.getUserLoans(req.params.id);
@@ -139,8 +140,8 @@ const user = {
       userLoans = loans.rows[0];
       return res.status(200).send({
         status: res.statusCode,
-        loans: loans,
-      })
+        loans: userLoans,
+      });
     } 
 
     return res.status(200).send({

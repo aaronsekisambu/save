@@ -11,7 +11,11 @@ router.post('/api/v1/auth/signup',
   userController.createUser);
 
 router.delete('/api/v1/users/:id',
+<<<<<<< HEAD
   isValid(userValidation.CheckUserId),
+=======
+  isValid(userValidation.userId),
+>>>>>>> [ft-164832221] add user details API
   userController.deleteUser);
 
 
@@ -20,6 +24,7 @@ router.post('/api/v1/auth/login',
   userController.userLogin);
 
 router.patch('/api/v1/users/:id/approve',
+<<<<<<< HEAD
   isValid(userValidation.checkUserId),
   userController.approveUser);
 
@@ -31,4 +36,13 @@ router.get('/api/v1/users/:id/loan_history',
 	isValid(userValidation.checkUserId),
 	userController.getUserLoans);
 
+=======
+  isValid(userValidation.userId),
+  userController.approveUser);
+
+router.get('/api/v1/users/:id/details',
+	isValid(userValidation.userId),
+	userController.getDetails);
+
+>>>>>>> [ft-164832221] add user details API
 export default router;
