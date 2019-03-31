@@ -63,7 +63,7 @@ class Loan {
   async checkLoanStatus(data) {
     try {
       this.loanStatus = await db.executeQuery(queries.getSingleUserLoan, data);
-      return this.loanStatus.rows[0];
+      return this.loanStatus;
     } catch (error) {
       return error;
     }

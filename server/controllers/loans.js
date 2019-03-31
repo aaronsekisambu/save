@@ -28,20 +28,26 @@ const loan = {
  */
 
   async payLoan(req, res) {
-    const response = await Loan.payBackLoan(req.body);
+    const { rows } = await Loan.payBackLoan(req.body);
     return res.status(200).send({
       status: res.statusCode,
-      data: response,
+      data: rows,
     });
   },
 
   async checkLoanStatus(req, res) {
-    const { userId } = req.body;
-    const { id } = req.params;
-    const response = await Loan.checkLoanStatus([id, userId]);
-    return res.status(200).send({
+    const { userId, loanId } = req.body;
+    const { rowCount, rows } = await Loan.checkLoanStatus([loanId, userId]);
+
+    if (rowCount > 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        data: rows,
+      });
+    }
+    return res.status(400).send({
       status: res.statusCode,
-      data: response,
+      data: 'No data for the provided information',
     });
   },
 
