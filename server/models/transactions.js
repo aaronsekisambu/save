@@ -17,8 +17,7 @@ class Transaction {
       const checkMoneySaved = await db.pool.query(queryMoneySaved, this.savedMoney);
       return checkMoneySaved.rows[0];
     } catch (error) {
-      console.log(error);
-      return false;
+      return error;
     }
   }
 }

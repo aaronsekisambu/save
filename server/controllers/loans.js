@@ -1,4 +1,3 @@
-// importing the Loan from models
 import Loan from '../models/loans';
 
 const loan = {
@@ -36,6 +35,14 @@ const loan = {
     });
   },
 
+  async checkLoanStatus(req, res) {
+    const response = await Loan.checkLoanStatus(req.body);
+    return res.status(200).send({
+      status: res.statusCode,
+      data: response,
+    });
+  },
+
   async approveLoan(req, res) {
     const loanApprove = await Loan.findLoan(req.params.id);
     try {
@@ -57,7 +64,6 @@ const loan = {
         data: appLoan,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).send({
         status: 500,
         message: 'Error While updating',
@@ -65,4 +71,5 @@ const loan = {
     }
   },
 };
+
 export default loan;
