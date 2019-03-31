@@ -11,7 +11,7 @@ router.post('/api/v1/auth/signup',
   userController.createUser);
 
 router.delete('/api/v1/users/:id',
-  isValid(userValidation.deleteUser),
+  isValid(userValidation.userId),
   userController.deleteUser);
 
 
@@ -20,7 +20,11 @@ router.post('/api/v1/auth/login',
   userController.userLogin);
 
 router.patch('/api/v1/users/:id/approve',
-  isValid(userValidation.deleteUser),
+  isValid(userValidation.userId),
   userController.approveUser);
+
+router.get('/api/v1/users/:id/details',
+	isValid(userValidation.userId),
+	userController.getDetails);
 
 export default router;

@@ -101,6 +101,22 @@ const user = {
 			message: 'User not found',
 		});
 	},
+
+    async getDetails(req, res) {    
+    const response = await userModel.getDetails(req.params.id);
+    if (response.rowCount !== 0) {
+      const user = response.rows[0];
+      return res.status(200).send({
+        status: res.statusCode,
+        data: user,
+      });
+    }
+    
+    return res.status(404).send({
+      status: res.statusCode,
+      message: 'User not found',
+    });
+  },
 };
 
 export default user;
