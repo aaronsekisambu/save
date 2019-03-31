@@ -40,9 +40,25 @@ class User {
   	}
   }
 
-  async getDetails(id) {
+  async getUserDetails(id) {
     try{
       return await db.executeQuery(queries.getUser, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserLoans(id) {
+    try{
+      return await db.executeQuery(queries.getUserLoans, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserTransactions(id) {
+    try{
+      return await db.executeQuery(queries.getUserTransactions, [id]);
     } catch (error) {
       return error;
     }

@@ -103,12 +103,26 @@ const user = {
 	},
 
     async getDetails(req, res) {    
-    const response = await userModel.getDetails(req.params.id);
+    const response = await userModel.getUserDetails(req.params.id);
+    const loans = await userModel.getUserLoans(req.params.id);
+    const transaction = await userModel.getUserTransactions(req.params.id);
+    
     if (response.rowCount !== 0) {
       const user = response.rows[0];
+      let userLoans = 'No loan history found';
+      if (loans.rowCount !== 0) {
+        userLoans = loans.rows[0];
+      }
+      let userTransactions = "No transaction record found";
+      if(transaction.rowCount !== 0) {
+        userTransactions = transaction.rows[0];
+      }
+      
       return res.status(200).send({
         status: res.statusCode,
-        data: user,
+        user: user,
+        loans: userLoans,
+        transaction: userTransactions,
       });
     }
     

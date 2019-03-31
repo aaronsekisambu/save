@@ -70,7 +70,7 @@ const createLoan = `
 
 const getUserLoans = `
 		SELECT * FROM loans 
-		WHERE userId = (SELECT userId from users WHERE userId = $1),
+		WHERE userId = $1
 		ORDER BY startDate DESC;
 	`;
 
@@ -105,6 +105,11 @@ const getSingleTransaction = `
 		SELECT * FROM transactions
 		WHERE transactionId = $1;
 	`;
+
+const getUserTransactions = `
+	SELECT * FROM transactions
+	WHERE userId = $1;
+	`
 
 const createUserTable = `
 		CREATE TABLE IF NOT EXISTS users(
@@ -166,6 +171,7 @@ export default {
   getUserLoans,
   getUserSavings,
   createTransaction,
+  getUserTransactions,
   getSingleTransaction,
   createUserTable,
   createLoansTable,
