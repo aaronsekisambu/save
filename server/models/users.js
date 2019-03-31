@@ -40,18 +40,13 @@ class User {
   	}
   }
 
-<<<<<<< HEAD
   async getUserDetails(id) {
-=======
-  async getDetails(id) {
->>>>>>> [ft-164832221] add user details API
     try{
       return await db.executeQuery(queries.getUser, [id]);
     } catch (error) {
       return error;
     }
   }
-<<<<<<< HEAD
 
   async getUserLoans(id) {
     try{
@@ -68,8 +63,6 @@ class User {
       return error;
     }
   }
-=======
->>>>>>> [ft-164832221] add user details API
 }
 
 export default new User();
