@@ -83,7 +83,6 @@ const user = {
     });
   },
 
-
   async approveUser(req, res) {
     const {
       rowCount,
@@ -93,6 +92,28 @@ const user = {
       return res.status(200).send({
         status: res.statusCode,
         message: 'Membership approved',
+      });
+    }
+
+    if (rowCount !== 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        message: 'Membership approved',
+      });
+    }
+
+    return res.status(404).send({
+      status: res.statusCode,
+      message: 'User not found',
+    });
+  },
+
+  async getDetails(req, res) {
+    const response = await userModel.getDetails(req.params.id);
+    if (response.rowCount !== 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        data: response.rows[0],
       });
     }
 

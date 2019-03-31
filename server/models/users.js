@@ -39,6 +39,15 @@ class User {
       return error;
     }
   }
+
+  async getDetails(id) {
+    this.id = id;
+    try {
+      return await db.executeQuery(queries.getUser, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default new User();
