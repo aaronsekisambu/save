@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import UserModel from '../models/users';
+import userModel from '../models/users';
 import auth from '../middleware/Auth';
 
 const user = {
@@ -7,7 +7,7 @@ const user = {
     const { email, password } = req.body;
     const salt = crypto.randomBytes(16).toString('hex');
     const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
-    const response = await UserModel.createUser({ email, salt, hash });
+    const response = await userModel.createUser({ email, salt, hash });
 
     if (response.rowCount === 1) {
       const userData = response.rows[0];
@@ -32,7 +32,7 @@ const user = {
   async deleteUser(req, res) {
     const {
       rowCount,
-    } = await UserModel.deleteUser(req.params);
+    } = await userModel.deleteUser(req.params);
     if (rowCount !== 0) {
       return res.status(200).send({
         status: res.statusCode,
@@ -47,7 +47,7 @@ const user = {
 
   async userLogin(req, res) {
     const { email, password } = req.body;
-    const response = await UserModel.getUser(email);
+    const response = await userModel.getUser(email);
 
     if (!(response.rowCount === 1)) {
       res.status(400).json({
@@ -86,14 +86,7 @@ const user = {
   async approveUser(req, res) {
     const {
       rowCount,
-    } = await UserModel.approveUser(req.params);
-
-    if (rowCount !== 0) {
-      return res.status(200).send({
-        status: res.statusCode,
-        message: 'Membership approved',
-      });
-    }
+    } = await userModel.approveUser(req.params);
 
     if (rowCount !== 0) {
       return res.status(200).send({
@@ -109,11 +102,16 @@ const user = {
   },
 
   async getDetails(req, res) {
-    const response = await userModel.getDetails(req.params.id);
+    const response = await userModel.getUserDetails(req.params.id);
+    const loans = await userModel.getUserLoans(req.params.id);
+    const transaction = await userModel.getUserTransactions(req.params.id);
+
     if (response.rowCount !== 0) {
       return res.status(200).send({
         status: res.statusCode,
-        data: response.rows[0],
+        user: response.rows[0],
+        loans: loans.rows,
+        transaction: transaction.rows,
       });
     }
 
