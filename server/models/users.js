@@ -64,23 +64,6 @@ class User {
       return error;
     }
   }
-
-  async getUserTransactions(id) {
-    this.id = id;
-    try {
-      return await db.executeQuery(queries.getUserTransactions, [id]);
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async getUserTransactions(id) {
-    try {
-      return await db.executeQuery(queries.getUserTransactions, [id]);
-    } catch (error) {
-      return error;
-    }
-  }
 }
 
 export default new User();
