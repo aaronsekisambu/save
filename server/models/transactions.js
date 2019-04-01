@@ -20,6 +20,24 @@ class Transaction {
       return error;
     }
   }
+
+  async approveSaving(data) {
+    this.approvedSaving = [
+      data.userId,
+      data.amount,
+      moment(new Date()),
+      data.transactionCode,
+      data.comment,
+    ];
+    try {
+      const queryUpdateAmount = queries.updateSingleTransaction;
+      const checkAmountUpdated = await db.pool(queryUpdateAmount, this.approvedSaving);
+      return checkAmountUpdated.rows[0];
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
 }
 
 export default new Transaction();

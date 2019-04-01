@@ -28,7 +28,7 @@ const approveUser = `
 	SET membershipDate = now()
 	WHERE userId = $1
 	RETURNING *;
-	`
+	`;
 
 const getUser = `
         SELECT * FROM users
@@ -44,7 +44,7 @@ const deleteUser = `
 		DELETE FROM users
 		WHERE userId = $1;
 	`;
-	
+
 const createLoan = `
 		INSERT INTO loans (
 		  "userid",
@@ -82,6 +82,7 @@ const getLoan = `
   SELECT * FROM loans
     where loanId = $1
 `;
+
 const changeLoanStatus = `
 								UPDATE loans
 								SET loanStatus=$1 WHERE loanId=$2 returning *`;
@@ -91,6 +92,7 @@ const getUserSavings = `
 			AND transactionCode = $2
 		ORDER BY transactionDate DESC;
 	`;
+
 const createTransaction = `
 		INSERT INTO transactions (
 				userId,
@@ -106,27 +108,37 @@ const createTransaction = `
 				$5) 
 			RETURNING *; 
 	`;
+
 const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
-				`;
+    `;
+const updateSingleTransaction = `
+        UPDATE transactions SET 
+          amount = $1,
+          transactionDate = $2,
+          transactionCode = $3,
+          comment = $4
+          WHERE userId = $5
+          `;
+
 const createUserTable = `
-		CREATE TABLE IF NOT EXISTS users(
-				userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-				firstName VARCHAR(255),
-				lastName VARCHAR(255),
-				employmentDate DATE,
-				membershipDate DATE,
-				isAdmin BOOLEAN DEFAULT false,
-				nationality VARCHAR(50),
-				phoneNumber INTEGER,
-				email VARCHAR(255) UNIQUE,
-				profileImage VARCHAR(255),
-				slackHandle VARCHAR(50),
-				salt TEXT,
-				hash TEXT
-			);
-		`;
+        CREATE TABLE IF NOT EXISTS users(
+                userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                firstName VARCHAR(255),
+                lastName VARCHAR(255),
+                employmentDate DATE,
+                membershipDate DATE,
+                isAdmin BOOLEAN DEFAULT false,
+                nationality VARCHAR(50),
+                phoneNumber INTEGER,
+                email VARCHAR(255),
+                profileImage VARCHAR(255),
+                slackHandle VARCHAR(50),
+                salt TEXT,
+                hash TEXT
+            );
+        `;
 
 const createLoansTable = `
 	CREATE TABLE IF NOT EXISTS loans(
@@ -141,8 +153,6 @@ const createLoansTable = `
 		startDate DATE
 			);
     `;
-
-
 
 const createTransactionsTable = `
 			CREATE TABLE IF NOT EXISTS transactions(
@@ -175,6 +185,7 @@ export default {
   getUserSavings,
   createTransaction,
   getSingleTransaction,
+  updateSingleTransaction,
   createUserTable,
   createLoansTable,
   createTransactionsTable,
