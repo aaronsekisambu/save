@@ -29,10 +29,12 @@ router.patch('/api/v1/users/:id/approve',
 
 router.get('/api/v1/users/:id/details',
   isValid(userValidation.checkUserId),
+  verifyToken,
   userController.getDetails);
 
 router.get('/api/v1/users/:id/loan_history',
   isValid(userValidation.checkUserId),
+  verifyToken,
   userController.getUserLoans);
 
 export default router;
