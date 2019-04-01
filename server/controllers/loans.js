@@ -15,7 +15,7 @@ const loan = {
         res.status(200).send({
           status: 200,
           message: 'the loan request has already been sent',
-          data: loan,
+          data: loanRes,
         });
       })
       .catch(err => err);

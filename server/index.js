@@ -2,7 +2,7 @@ import express from 'express';
 import save from './routes/transactions';
 import loans from './routes/loans';
 import userRoute from './routes/users';
-import joiErrors from './middleware/joiValidator';
+import joiErrors from './middleware/joiErrors';
 
 const app = express();
 

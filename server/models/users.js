@@ -34,10 +34,10 @@ class User {
   async approveUser(data) {
     this.id = data.id;
     try {
-  		return await db.executeQuery(queries.approveUser, [this.id]);
-  	} catch (error) {
-  		return error;
-  	}
+      return await db.executeQuery(queries.approveUser, [this.id]);
+    } catch (error) {
+      return error;
+    }
   }
 }
 
