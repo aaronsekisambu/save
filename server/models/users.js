@@ -3,7 +3,8 @@ import queries from '../config/queries';
 
 class User {
   async createUser(data) {
-    const { email, salt, hash } = data;
+    this.data = data;
+    const { email, salt, hash } = this.data;
     try {
       const user = await db.pool.query(queries.createUser, [email, salt, hash]);
       return user;
@@ -14,8 +15,9 @@ class User {
 
 
   async getUser(email) {
+    this.email = email;
     try {
-      const user = await db.pool.query(queries.getUserByEmail, [email]);
+      const user = await db.executeQuery(queries.getUserByEmail, [this.email]);
       return user;
        } catch (error) {
       return error;
@@ -38,6 +40,57 @@ class User {
   	} catch (error) {
   		return error;
   	}
+  }
+
+  async getUserDetails(id) {
+    try{
+      return await db.executeQuery(queries.getUser, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserLoans(id) {
+    try{
+      return await db.executeQuery(queries.getUserLoans, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserTransactions(id) {
+    try{
+      return await db.executeQuery(queries.getUserTransactions, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserDetails(id) {
+    this.id = id;
+    try {
+      return await db.executeQuery(queries.getUser, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserLoans(id) {
+    this.id = id;
+    try {
+      return await db.executeQuery(queries.getUserLoans, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserTransactions(id) {
+    this.id = id;
+    try {
+      return await db.executeQuery(queries.getUserTransactions, [id]);
+    } catch (error) {
+      return error;
+    }
   }
 
   async getUserDetails(id) {

@@ -82,7 +82,6 @@ const user = {
       error: 'incorrect password',
     });
   },
-
   
 	async approveUser(req, res) {    
 		const {
@@ -133,6 +132,27 @@ const user = {
     });
   },
 
+
+  async getDetails(req, res) {
+    const response = await userModel.getUserDetails(req.params.id);
+    const loans = await userModel.getUserLoans(req.params.id);
+    const transaction = await userModel.getUserTransactions(req.params.id);
+
+    if (response.rowCount !== 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        user: response.rows,
+        loans: loans.rows,
+        transaction: transaction.rows,
+      });
+    }
+
+    return res.status(404).send({
+      status: res.statusCode,
+      message: 'User not found',
+    });
+  },
+
   async getUserLoans(req, res) {
     const loans = await userModel.getUserLoans(req.params.id);
     let userLoans = 'No loan history found';
@@ -148,7 +168,8 @@ const user = {
       status: res.statusCode,
       message: userLoans,
     })
-  }
+  },
+
 };
 
 export default user;

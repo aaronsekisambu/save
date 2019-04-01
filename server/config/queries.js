@@ -1,5 +1,5 @@
 const createUser = `
-	INSERT INTO users (
+INSERT INTO users (
 		email,
 	  salt,
 	  hash
@@ -125,7 +125,7 @@ const updateSingleTransaction = `
 const getUserTransactions = `
 	SELECT * FROM transactions
 	WHERE userId = $1;
-	`
+	`;
 
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
