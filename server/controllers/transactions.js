@@ -17,16 +17,22 @@ const Transaction = {
             }],
           });
         }
+        console.log(save);
         return res.status(200).send({
           status: res.statusCode,
-          data: [{
-            save,
-          }],
+          data: save,
         });
       })
       .catch(error => console.log(error));
   },
   async updateSaving(req, res) {
+    const checkAdmin = req.user.isadmin;
+    if (checkAdmin === false) {
+      res.status(401).send({
+        status: 401,
+        message: 'Admin Access is required to approve the loan',
+      });
+    }
     const updated = req.params.id;
     await transcat.approveSaving(updated)
       .then((update) => {

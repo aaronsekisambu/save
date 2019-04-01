@@ -6,7 +6,7 @@ class User {
     this.data = data;
     const { email, salt, hash } = this.data;
     try {
-      const user = await db.executeQuery(queries.createUser, [email, salt, hash]);
+      const user = await db.pool.query(queries.createUser, [email, salt, hash]);
       return user;
     } catch (error) {
       return error;
@@ -19,7 +19,7 @@ class User {
     try {
       const user = await db.executeQuery(queries.getUserByEmail, [this.email]);
       return user;
-    } catch (error) {
+       } catch (error) {
       return error;
     }
   }
@@ -34,9 +34,33 @@ class User {
   }
 
   async approveUser(data) {
-    this.id = data.id;
-    try {
-      return await db.executeQuery(queries.approveUser, [this.id]);
+  	this.id = data.id;
+  	try{
+  		return await db.executeQuery(queries.approveUser, [this.id]);
+  	} catch (error) {
+  		return error;
+  	}
+  }
+
+  async getUserDetails(id) {
+    try{
+      return await db.executeQuery(queries.getUser, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserLoans(id) {
+    try{
+      return await db.executeQuery(queries.getUserLoans, [id]);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserTransactions(id) {
+    try{
+      return await db.executeQuery(queries.getUserTransactions, [id]);
     } catch (error) {
       return error;
     }

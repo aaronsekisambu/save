@@ -1,6 +1,6 @@
 import Validate from 'celebrate';
 
-const userId = {
+const checkUserId = {
   params: {
     id: Validate.Joi.string().uuid().required().trim(),
   },
@@ -21,7 +21,7 @@ const userLogin = {
 };
 
 export default {
-  userId,
+  checkUserId,
   userSignup,
   userLogin,
 };

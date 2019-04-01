@@ -11,24 +11,24 @@ router.post('/api/v1/auth/signup',
   userController.createUser);
 
 router.delete('/api/v1/users/:id',
-  isValid(userValidation.userId),
+  isValid(userValidation.checkUserId),
   userController.deleteUser);
+
 
 router.post('/api/v1/auth/login',
   isValid(userValidation.userLogin),
   userController.userLogin);
 
 router.patch('/api/v1/users/:id/approve',
-  isValid(userValidation.userId),
+  isValid(userValidation.checkUserId),
   userController.approveUser);
 
 router.get('/api/v1/users/:id/details',
-<<<<<<< HEAD
-  isValid(userValidation.userId),
-  userController.getDetails);
-=======
-	isValid(userValidation.userId),
+	isValid(userValidation.checkUserId),
 	userController.getDetails);
->>>>>>> c4474ae6c58ee52533fa4a25898f08967b26f0f7
+
+router.get('/api/v1/users/:id/loan_history',
+	isValid(userValidation.checkUserId),
+	userController.getUserLoans);
 
 export default router;
