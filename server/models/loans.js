@@ -6,11 +6,12 @@ class Loan {
     this.pool = db.pool;
   }
 
-  async payBackLoan(data) {
+  async payBackLoan(data, loan) {
     const {
       userId, amount, transactionDate, transactionCode, comment,
     } = data;
-    const params = [userId, amount, transactionDate, transactionCode, comment];
+    const { id } = loan;
+    const params = [userId, id, amount, transactionDate, transactionCode, comment];
     try {
       return await this.pool.query(queries.createTransaction, params);
     } catch (error) {
@@ -63,6 +64,15 @@ class Loan {
     } catch (err) {
       console.log(err);
       return false;
+    }
+  }
+
+  async checkLoanStatus(data) {
+    try {
+      this.loanStatus = await db.executeQuery(queries.getSingleUserLoan, data);
+      return this.loanStatus;
+    } catch (error) {
+      return error;
     }
   }
 }

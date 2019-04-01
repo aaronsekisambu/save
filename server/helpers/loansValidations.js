@@ -8,6 +8,9 @@ const payLoan = {
     transactionCode: Validate.Joi.string().required().trim(),
     comment: Validate.Joi.string().required().trim(),
   },
+  params: {
+    id: Validate.Joi.string().uuid().required().trim(),
+  },
 };
 
 // validating the requesting loan endpoint

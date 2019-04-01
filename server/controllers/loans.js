@@ -28,10 +28,10 @@ const loan = {
  */
 
   async payLoan(req, res) {
-    const { rows } = await Loan.payBackLoan(req.body);
+    const { rows } = await Loan.payBackLoan(req.body, req.params);
     return res.status(200).send({
       status: res.statusCode,
-      data: rows,
+      data: rows[0],
     });
   },
 
@@ -42,7 +42,7 @@ const loan = {
     if (rowCount > 0) {
       return res.status(200).send({
         status: res.statusCode,
-        data: rows,
+        data: rows[0],
       });
     }
     return res.status(400).send({

@@ -11,8 +11,8 @@ const user = {
 
     if (response.rowCount === 1) {
       const userData = response.rows[0];
-      const { userId } = userData;
-      const token = auth.generateToken({ email, userId });
+      const { userid, isadmin } = userData;
+      const token = auth.generateToken({ email, userid, isadmin });
 
       res.status(201).json({
         status: 201,
@@ -57,7 +57,7 @@ const user = {
       return;
     }
 
-    const { salt, hash, userId } = response.rows[0];
+    const { salt, hash, userId, isadmin } = response.rows[0];
     const currentHash = crypto.pbkdf2Sync(
       password,
       salt,
@@ -67,7 +67,7 @@ const user = {
     ).toString('hex');
 
     if (hash === currentHash) {
-      const token = auth.generateToken({ email, password, userId });
+      const token = auth.generateToken({ email, isadmin, userId });
       res.status(200).json({
         status: res.statusCode,
         token,
