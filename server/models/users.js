@@ -13,7 +13,6 @@ class User {
     }
   }
 
-
   async getUser(email) {
     this.email = email;
     try {

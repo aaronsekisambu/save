@@ -2,16 +2,19 @@ import express from 'express';
 import { celebrate } from 'celebrate';
 import userController from '../controllers/users';
 import userValidation from '../helpers/userValidations';
+import token from '../middleware/Auth';
 
 const router = express.Router();
 const isValid = params => celebrate(params, { abortEarly: false });
+const verifyToken = token.verifyToken();
 
 router.post('/api/v1/auth/signup',
   isValid(userValidation.userSignup),
   userController.createUser);
 
 router.delete('/api/v1/users/:id',
-  isValid(userValidation.checkUserId),
+  isValid(userValidation.deleteUser),
+  verifyToken,
   userController.deleteUser);
 
 
