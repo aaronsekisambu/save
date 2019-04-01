@@ -92,20 +92,20 @@ const getUserSavings = `
 		ORDER BY transactionDate DESC;
 	`;
 const createTransaction = `
-        INSERT INTO transactions (
-                userId,
-                amount,
-                transactionDate,
-                transactionCode,
-                comment
-            ) VALUES (
-                (SELECT userId from users WHERE userId = $1),
-                $1,
-                $2,
-                $3,
-                $4) 
-            RETURNING *; 
-				`;
+		INSERT INTO transactions (
+				userId,
+				amount,
+				transactionDate,
+				transactionCode,
+				comment
+			) VALUES (
+				(SELECT userId from users WHERE userId = $1),
+				$2,
+				$3,
+				$4,
+				$5) 
+			RETURNING *; 
+	`;
 const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
@@ -140,7 +140,9 @@ const createLoansTable = `
 		loanStatus TEXT,
 		startDate DATE
 			);
-		`;
+    `;
+
+
 
 const createTransactionsTable = `
 			CREATE TABLE IF NOT EXISTS transactions(
