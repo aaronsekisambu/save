@@ -1,6 +1,6 @@
 const createUser = `
 	INSERT INTO users (
-	  email,
+		email,
 	  salt,
 	  hash
 	) VALUES ($1,$2,$3)
@@ -75,10 +75,16 @@ const getUserLoans = `
 	`;
 
 const getSingleUserLoan = `
-		SELECT * FROM loans
-		WHERE loanId = $1 AND userId = (SELECT userId from users WHERE userId = $2);
-	`;
-
+        SELECT * FROM loans
+        WHERE loanId = $1 AND userId = (SELECT userId from users WHERE userId = $2);
+				`;
+const getLoan = `
+  SELECT * FROM loans
+    where loanId = $1
+`;
+const changeLoanStatus = `
+								UPDATE loans
+								SET loanStatus=$1 WHERE loanId=$2 returning *`;
 const getUserSavings = `
 		SELECT * FROM transactions
 		WHERE userId = (SELECT userId from users WHERE userId = $1)
@@ -86,26 +92,24 @@ const getUserSavings = `
 		ORDER BY transactionDate DESC;
 	`;
 const createTransaction = `
-		INSERT INTO transactions (
-				userId,
-				amount,
-				transactionDate,
-				transactionCode,
-				comment
-			) VALUES (
-				(SELECT userId from users WHERE userId = $1),
-				$1,
-				$2,
-				$3,
-				$4,
-				$5) 
-			RETURNING *; 
-	`;
+        INSERT INTO transactions (
+                userId,
+                amount,
+                transactionDate,
+                transactionCode,
+                comment
+            ) VALUES (
+                (SELECT userId from users WHERE userId = $1),
+                $1,
+                $2,
+                $3,
+                $4) 
+            RETURNING *; 
+				`;
 const getSingleTransaction = `
-		SELECT * FROM transactions
-		WHERE transactionId = $1;
-	`;
-
+        SELECT * FROM transactions
+        WHERE transactionId = $1;
+				`;
 const createUserTable = `
 		CREATE TABLE IF NOT EXISTS users(
 				userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -164,6 +168,8 @@ export default {
   createLoan,
   getSingleUserLoan,
   getUserLoans,
+  getLoan,
+  changeLoanStatus,
   getUserSavings,
   createTransaction,
   getSingleTransaction,
