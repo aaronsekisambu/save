@@ -100,7 +100,6 @@ const createTransaction = `
                 comment
             ) VALUES (
                 (SELECT userId from users WHERE userId = $1),
-                $1,
                 $2,
                 $3,
                 $4) 
@@ -109,38 +108,43 @@ const createTransaction = `
 const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
-				`;
+    `;
+const updateSingleTransaction = `
+        UPDATE transactions SET 
+          amount = $1,
+          transactionDate = $2,
+          transactionCode = $3,
+          comment = $4
+          WHERE userId = $5
+          `;
+
 const createUserTable = `
-		CREATE TABLE IF NOT EXISTS users(
-				userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-				firstName VARCHAR(255),
-				lastName VARCHAR(255),
-				employmentDate DATE,
-				membershipDate DATE,
-				isAdmin BOOLEAN DEFAULT false,
-				nationality VARCHAR(50),
-				phoneNumber INTEGER,
-				email VARCHAR(255) UNIQUE,
-				profileImage VARCHAR(255),
-				slackHandle VARCHAR(50),
-				salt TEXT,
-				hash TEXT
-			);
-		`;
+        CREATE TABLE IF NOT EXISTS users(
+                userId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                firstName VARCHAR(255),
+                lastName VARCHAR(255),
+                employmentDate DATE,
+                membershipDate DATE,
+                nationality VARCHAR(50),
+                phoneNumber INTEGER,
+                email VARCHAR(255),
+                profileImage VARCHAR(255),
+                slackHandle VARCHAR(50),
+                salt TEXT,
+                hash TEXT
+            );
+        `;
 
 const createLoansTable = `
-	CREATE TABLE IF NOT EXISTS loans(
-		loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-		userId UUID REFERENCES users(userId),
-		guarantor UUID REFERENCES users(userId),
-		amount INTEGER NOT NULL,
-		interest INTEGER NOT NULL,
-		totalAmount INTEGER NOT NULL,
-		paymentPeriod INTEGER NOT NULL,
-		loanStatus TEXT,
-		startDate DATE
-			);
-		`;
+            CREATE TABLE IF NOT EXISTS loans(
+                loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                userId UUID REFERENCES users(userId),
+                guarantor UUID REFERENCES users(userId),
+                amount INTEGER NOT NULL,
+                paymentPeriod INTEGER NOT NULL,
+                startDate DATE
+            );
+        `;
 
 const createTransactionsTable = `
 			CREATE TABLE IF NOT EXISTS transactions(
@@ -173,6 +177,7 @@ export default {
   getUserSavings,
   createTransaction,
   getSingleTransaction,
+  updateSingleTransaction,
   createUserTable,
   createLoansTable,
   createTransactionsTable,
