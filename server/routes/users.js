@@ -24,6 +24,7 @@ router.post('/api/v1/auth/login',
 
 router.patch('/api/v1/users/:id/approve',
   isValid(userValidation.checkUserId),
+  verifyToken,
   userController.approveUser);
 
 router.get('/api/v1/users/:id/details',

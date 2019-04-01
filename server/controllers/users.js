@@ -30,18 +30,30 @@ const user = {
   },
 
   async deleteUser(req, res) {
-    const {
-      rowCount,
-    } = await userModel.deleteUser(req.params);
-    if (rowCount !== 0) {
+    const checkAdmin = req.user.isadmin;
+    if (checkAdmin === false) {
+      return res.status(401).send({
+        status: 401,
+        message: 'Admin Access is required to approve the loan',
+      });
+    }
+    const response = await userModel.deleteUser(req.params);
+    const { rowCount } = response;
+    if (rowCount > 0) {
       return res.status(200).send({
         status: res.statusCode,
         message: 'User deleted successfully from members',
       });
     }
+    if (rowCount === 0) {
+      return res.status(404).send({
+        status: res.statusCode,
+        message: 'User not found',
+      });
+    }
     return res.status(404).send({
       status: res.statusCode,
-      message: 'User not found',
+      message: response.detail,
     });
   },
 
@@ -57,7 +69,9 @@ const user = {
       return;
     }
 
-    const { salt, hash, userId, isadmin } = response.rows[0];
+    const {
+      salt, hash, userId, isadmin,
+    } = response.rows[0];
     const currentHash = crypto.pbkdf2Sync(
       password,
       salt,
@@ -84,6 +98,13 @@ const user = {
   },
 
   async approveUser(req, res) {
+    const checkAdmin = req.user.isadmin;
+    if (checkAdmin === false) {
+      return res.status(401).send({
+        status: 401,
+        message: 'Admin Access is required to approve the loan',
+      });
+    }
     const {
       rowCount,
     } = await userModel.approveUser(req.params);
