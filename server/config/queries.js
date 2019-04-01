@@ -82,6 +82,7 @@ const getLoan = `
   SELECT * FROM loans
     where loanId = $1
 `;
+
 const changeLoanStatus = `
 								UPDATE loans
 								SET loanStatus=$1 WHERE loanId=$2 returning *`;
@@ -91,20 +92,23 @@ const getUserSavings = `
 			AND transactionCode = $2
 		ORDER BY transactionDate DESC;
 	`;
+
 const createTransaction = `
-        INSERT INTO transactions (
-                userId,
-                amount,
-                transactionDate,
-                transactionCode,
-                comment
-            ) VALUES (
-                (SELECT userId from users WHERE userId = $1),
-                $2,
-                $3,
-                $4) 
-            RETURNING *; 
-				`;
+		INSERT INTO transactions (
+				userId,
+				amount,
+				transactionDate,
+				transactionCode,
+				comment
+			) VALUES (
+				(SELECT userId from users WHERE userId = $1),
+				$2,
+				$3,
+				$4,
+				$5) 
+			RETURNING *; 
+	`;
+
 const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
@@ -137,15 +141,18 @@ const createUserTable = `
         `;
 
 const createLoansTable = `
-            CREATE TABLE IF NOT EXISTS loans(
-                loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                userId UUID REFERENCES users(userId),
-                guarantor UUID REFERENCES users(userId),
-                amount INTEGER NOT NULL,
-                paymentPeriod INTEGER NOT NULL,
-                startDate DATE
-            );
-        `;
+	CREATE TABLE IF NOT EXISTS loans(
+		loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+		userId UUID REFERENCES users(userId),
+		guarantor UUID REFERENCES users(userId),
+		amount INTEGER NOT NULL,
+		interest INTEGER NOT NULL,
+		totalAmount INTEGER NOT NULL,
+		paymentPeriod INTEGER NOT NULL,
+		loanStatus TEXT,
+		startDate DATE
+			);
+    `;
 
 const createTransactionsTable = `
 			CREATE TABLE IF NOT EXISTS transactions(

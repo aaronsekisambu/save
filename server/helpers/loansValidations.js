@@ -30,8 +30,16 @@ const approveLoan = {
   },
 };
 
+const checkLoanStatus = {
+  body: {
+    userId: Validate.Joi.string().uuid().required().trim(),
+    loanId: Validate.Joi.string().uuid().required().trim(),
+  },
+};
+
 export default {
   payLoan,
   requestLoan,
   approveLoan,
+  checkLoanStatus,
 };

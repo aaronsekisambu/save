@@ -14,11 +14,10 @@ class Transaction {
     ];
     try {
       const queryMoneySaved = queries.createTransaction;
-      const checkMoneySaved = await db.pool.query(queryMoneySaved, this.savedMoney);
+      const checkMoneySaved = await db.executeQuery(queryMoneySaved, this.savedMoney);
       return checkMoneySaved.rows[0];
     } catch (error) {
-      console.log(error);
-      return false;
+      return error;
     }
   }
 
