@@ -5,7 +5,7 @@ class User {
   static async createUser(data) {
     const { email, salt, hash } = data;
     try {
-      const user = await db.pool.query(queries.createUser, [email, salt, hash]);
+      const user = await db.executeQuery(queries.createUser, [email, salt, hash]);
       return user;
     } catch (error) {
       return error;
@@ -15,7 +15,7 @@ class User {
 
   static async getUser(email) {
     try {
-      const user = await db.pool.query(queries.getUserByEmail, [email]);
+      const user = await db.executeQuery(queries.getUserByEmail, [email]);
       return user;
     } catch (error) {
       return error;
