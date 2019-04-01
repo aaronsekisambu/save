@@ -23,7 +23,12 @@ router.patch('/api/v1/users/:id/approve',
   userController.approveUser);
 
 router.get('/api/v1/users/:id/details',
+<<<<<<< HEAD
   isValid(userValidation.userId),
   userController.getDetails);
+=======
+	isValid(userValidation.userId),
+	userController.getDetails);
+>>>>>>> c4474ae6c58ee52533fa4a25898f08967b26f0f7
 
 export default router;

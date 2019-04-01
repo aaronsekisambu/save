@@ -109,7 +109,7 @@ const user = {
     if (response.rowCount !== 0) {
       return res.status(200).send({
         status: res.statusCode,
-        user: response.rows[0],
+        user: response.rows,
         loans: loans.rows,
         transaction: transaction.rows,
       });
