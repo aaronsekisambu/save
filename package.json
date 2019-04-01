@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/aaronsekisambu/save.git"
   },
+  "engines": {
+    "node": "10.15.3"
+  },
   "author": "Kgl-Avengers group",
   "license": "ISC",
   "dependencies": {
