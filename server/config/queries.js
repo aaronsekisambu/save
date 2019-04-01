@@ -96,6 +96,24 @@ const getUserSavings = `
 const createTransaction = `
 		INSERT INTO transactions (
 				userId,
+				loanId,
+				amount,
+				transactionDate,
+				transactionCode,
+				comment
+			) VALUES (
+				(SELECT userId from users WHERE userId = $1),
+				$2,
+				$3,
+				$4,
+				$5,
+				$6) 
+			RETURNING *; 
+	`;
+
+const createSavings = `
+		INSERT INTO transactions (
+				userId,
 				amount,
 				transactionDate,
 				transactionCode,
@@ -106,7 +124,7 @@ const createTransaction = `
 				$3,
 				$4,
 				$5) 
-			RETURNING *; 
+			RETURNING transactionId, userId, amount, transactionDate, transactionCode, comment; 
 	`;
 
 const getSingleTransaction = `
@@ -116,11 +134,10 @@ const getSingleTransaction = `
 const updateSingleTransaction = `
         UPDATE transactions SET 
           amount = $1,
-          transactionDate = $2,
-          transactionCode = $3,
-          comment = $4
-          WHERE userId = $5
-          `;
+          transactionCode = $2,
+          comment = $3
+          WHERE userId = $4 AND transactionId = $5
+          RETURNING transactionId, userId, amount, transactionDate, transactionCode, comment`;
 
 const getUserTransactions = `
 	SELECT * FROM transactions
@@ -162,6 +179,7 @@ const createLoansTable = `
 const createTransactionsTable = `
 			CREATE TABLE IF NOT EXISTS transactions(
 				transactionId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+				loanId UUID,
 				amount INTEGER NOT NULL,
 				userId UUID REFERENCES users(userId),
 				transactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -188,6 +206,7 @@ export default {
   getLoan,
   changeLoanStatus,
   getUserSavings,
+  createSavings,
   createTransaction,
   getUserTransactions,
   getSingleTransaction,

@@ -17,7 +17,6 @@ const Transaction = {
             }],
           });
         }
-        console.log(save);
         return res.status(200).send({
           status: res.statusCode,
           data: save,
@@ -25,6 +24,7 @@ const Transaction = {
       })
       .catch(error => console.log(error));
   },
+
   async updateSaving(req, res) {
     const checkAdmin = req.user.isadmin;
     if (checkAdmin === false) {
@@ -34,9 +34,10 @@ const Transaction = {
       });
     }
     const updated = req.params.id;
-    await transcat.approveSaving(updated)
+    await transcat.approveSaving(req.body, updated)
       .then((update) => {
-        if (!update) {
+        const { rowCount, rows } = update;
+        if (rowCount <= 0) {
           res.status(400).send({
             status: res.statusCode,
             errorMessage: 'Please which user details to update',
@@ -44,9 +45,7 @@ const Transaction = {
         }
         return res.status(200).send({
           status: res.statusCode,
-          data: [{
-            update,
-          }],
+          data: rows[0],
         });
       });
   },

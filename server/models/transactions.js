@@ -13,7 +13,7 @@ class Transaction {
       data.comment,
     ];
     try {
-      const queryMoneySaved = queries.createTransaction;
+      const queryMoneySaved = queries.createSavings;
       const checkMoneySaved = await db.executeQuery(queryMoneySaved, this.savedMoney);
       return checkMoneySaved.rows[0];
     } catch (error) {
@@ -21,21 +21,19 @@ class Transaction {
     }
   }
 
-  async approveSaving(data) {
+  async approveSaving(data, userId) {
     this.approvedSaving = [
-      data.userId,
       data.amount,
-      moment(new Date()),
       data.transactionCode,
       data.comment,
+      userId,
+      data.transactionid,
     ];
     try {
       const queryUpdateAmount = queries.updateSingleTransaction;
-      const checkAmountUpdated = await db.pool(queryUpdateAmount, this.approvedSaving);
-      return checkAmountUpdated.rows[0];
+      return await db.pool.query(queryUpdateAmount, this.approvedSaving);
     } catch (e) {
-      console.log(e);
-      return false;
+      return e;
     }
   }
 }

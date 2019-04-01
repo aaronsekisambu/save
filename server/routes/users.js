@@ -24,14 +24,17 @@ router.post('/api/v1/auth/login',
 
 router.patch('/api/v1/users/:id/approve',
   isValid(userValidation.checkUserId),
+  verifyToken,
   userController.approveUser);
 
 router.get('/api/v1/users/:id/details',
   isValid(userValidation.checkUserId),
+  verifyToken,
   userController.getDetails);
 
 router.get('/api/v1/users/:id/loan_history',
   isValid(userValidation.checkUserId),
+  verifyToken,
   userController.getUserLoans);
 
 export default router;
