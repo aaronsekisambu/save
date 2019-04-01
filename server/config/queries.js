@@ -1,5 +1,4 @@
 const createUser = `
-<<<<<<< HEAD
 	INSERT INTO users (
 		email,
 	  salt,
@@ -29,34 +28,7 @@ const approveUser = `
 	SET membershipDate = now()
 	WHERE userId = $1
 	RETURNING *;
-	`
-=======
-    INSERT INTO users (
-      email,
-      salt,
-      hash
-    ) VALUES ($1,$2,$3)
-    RETURNING *;
-  `;
-
-const updateUser = `
-        UPDATE users SET 
-                firstName = $1,
-                lastName = $2,
-                employmentDate = $3,
-                membershipDate = $4,
-                nationality = $5,
-                phoneNumber = $6,
-                email = $7,
-                profileImage = $8,
-                slackHandle = $9,
-                salt = $10,
-                hash = $11
-           WHERE userId = $12
-           RETURNING *; 
-            
-    `;
->>>>>>> [#164833929] User should be able to update a saving
+	`;
 
 const getUser = `
         SELECT * FROM users
@@ -72,9 +44,8 @@ const deleteUser = `
 		DELETE FROM users
 		WHERE userId = $1;
 	`;
-	
+
 const createLoan = `
-<<<<<<< HEAD
 		INSERT INTO loans (
 		  "userid",
 		  "guarantor",
@@ -96,29 +67,6 @@ const createLoan = `
 					)
 			RETURNING *;
 	`;
-=======
-        INSERT INTO loans (
-          "userid",
-          "guarantor",
-          "amount",
-          "interest",
-          "totalamount",
-          "paymentperiod",
-          "loanstatus",
-          "startdate"
-             ) VALUES (
-                    (SELECT userId from users WHERE userId = $1),
-                    (SELECT userId from users WHERE userId = $2),
-                    $3,
-                    $4,
-                    $5,
-                    $6,
-                    $7,
-                    $8
-                    )
-            RETURNING *;
-    `;
->>>>>>> [#164833929] User should be able to update a saving
 
 const getUserLoans = `
 		SELECT * FROM loans 
@@ -161,6 +109,14 @@ const getSingleTransaction = `
         SELECT * FROM transactions
         WHERE transactionId = $1;
     `;
+const updateSingleTransaction = `
+        UPDATE transactions SET 
+          amount = $1,
+          transactionDate = $2,
+          transactionCode = $3,
+          comment = $4
+          WHERE userId = $5
+          `;
 
 const createUserTable = `
         CREATE TABLE IF NOT EXISTS users(
@@ -172,7 +128,7 @@ const createUserTable = `
                 isAdmin BOOLEAN DEFAULT false,
                 nationality VARCHAR(50),
                 phoneNumber INTEGER,
-                email VARCHAR(255) UNIQUE,
+                email VARCHAR(255),
                 profileImage VARCHAR(255),
                 slackHandle VARCHAR(50),
                 salt TEXT,
@@ -181,16 +137,13 @@ const createUserTable = `
         `;
 
 const createLoansTable = `
-    CREATE TABLE IF NOT EXISTS loans(
-        loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-        userId UUID REFERENCES users(userId),
-        guarantor UUID REFERENCES users(userId),
-        amount INTEGER NOT NULL,
-        interest INTEGER NOT NULL,
-        totalAmount INTEGER NOT NULL,
-        paymentPeriod INTEGER NOT NULL,
-        loanStatus TEXT,
-        startDate DATE
+            CREATE TABLE IF NOT EXISTS loans(
+                loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                userId UUID REFERENCES users(userId),
+                guarantor UUID REFERENCES users(userId),
+                amount INTEGER NOT NULL,
+                paymentPeriod INTEGER NOT NULL,
+                startDate DATE
             );
         `;
 
@@ -213,10 +166,7 @@ const dropTables = `
 export default {
   createUser,
   updateUser,
-<<<<<<< HEAD
   approveUser,
-=======
->>>>>>> [#164833929] User should be able to update a saving
   getUser,
   getUserByEmail,
   deleteUser,
