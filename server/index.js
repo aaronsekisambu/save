@@ -11,6 +11,10 @@ app.use(express.json());
 app.use(save);
 app.use(loans);
 app.use(userRoute);
+
+app.get('/', (req, res) => res.send({
+  message: 'hello',
+}));
 /**
  * Error validation middleware has to be at the end of all routes
  */
