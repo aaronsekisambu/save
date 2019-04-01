@@ -13,7 +13,7 @@ class User {
   }
 
 
-  static async getUser(email) {
+  async getUser(email) {
     try {
       const user = await db.pool.query(queries.getUserByEmail, [email]);
       return user;
