@@ -37,6 +37,42 @@ const loan = {
   },
 
   async approveLoan(req, res) {
+    const checkAdmin = req.user.isadmin;
+    const loanApprove = await Loan.findLoan(req.params.id);
+    try {
+      if (checkAdmin === false) {
+        return res.status(401).send({
+          status: 401,
+          message: 'Admin Access is required to approve the loan',
+        });
+      }
+      if (!loanApprove || loanApprove.rows.length === 0) {
+        return res.status(404).send({
+          status: 404,
+          message: 'loan not found',
+        });
+      }
+
+      const data = [
+        req.body.loanStatus || loanApprove.rows[0].loanStatus,
+        req.params.id,
+      ];
+
+      const appLoan = await Loan.approveLoan(data);
+      return res.status(200).send({
+        status: 200,
+        data: appLoan,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send({
+        status: 500,
+        message: 'Error While updating',
+      });
+    }
+  },
+
+  async approveLoanRequest(req, res) {
     const loanApprove = await Loan.findLoan(req.params.id);
     try {
       if (!loanApprove || loanApprove.rows.length === 0) {

@@ -11,8 +11,8 @@ const user = {
 
     if (response.rowCount === 1) {
       const userData = response.rows[0];
-      const { userId } = userData;
-      const token = auth.generateToken({ email, userId });
+      const { userid, isadmin } = userData;
+      const token = auth.generateToken({ email, userid, isadmin });
 
       res.status(201).json({
         status: 201,
