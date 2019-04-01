@@ -2,13 +2,17 @@ import db from '../config/db';
 import queries from '../config/queries';
 
 class Loan {
+  constructor() {
+    this.pool = db.pool;
+  }
+
   async payBackLoan(data) {
     const {
       userId, amount, transactionDate, transactionCode, comment,
     } = data;
-    this.params = [userId, amount, transactionDate, transactionCode, comment];
+    const params = [userId, amount, transactionDate, transactionCode, comment];
     try {
-      return await db.executeQuery(queries.createTransaction, this.params);
+      return await this.pool.query(queries.createTransaction, params);
     } catch (error) {
       return error;
     }
@@ -27,9 +31,10 @@ class Loan {
     ];
 
     try {
-      const requestLoan = await db.executeQuery(queries.createLoan, this.newLoan);
+      const requestLoan = await db.pool.query(queries.createLoan, this.newLoan);
       return requestLoan.rows[0];
     } catch (error) {
+      console.log(error);
       return false;
     }
   }
@@ -40,8 +45,8 @@ class Loan {
   */
   async findLoan(id) {
     try {
-      this.findSingleLoan = await db.executeQuery(queries.getLoan, [id]);
-      return this.findSingleLoan;
+      const findSingleLoan = await this.pool.query(queries.getLoan, [id]);
+      return findSingleLoan;
     } catch (err) {
       return false;
     }
@@ -53,19 +58,11 @@ class Loan {
   */
   async approveLoan(data) {
     try {
-      this.approveLoans = await db.executeQuery(queries.changeLoanStatus, data);
-      return this.approveLoan.rows[0];
+      const approveLoans = await this.pool.query(queries.changeLoanStatus, data);
+      return approveLoans.rows[0];
     } catch (err) {
-      return err;
-    }
-  }
-
-  async checkLoanStatus(data) {
-    try {
-      this.loanStatus = await db.executeQuery(queries.getSingleUserLoan, data);
-      return this.loanStatus;
-    } catch (error) {
-      return error;
+      console.log(err);
+      return false;
     }
   }
 }
