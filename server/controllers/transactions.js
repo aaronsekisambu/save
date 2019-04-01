@@ -34,7 +34,7 @@ const Transaction = {
           res.status(400).send({
             status: res.statusCode,
             errorMessage: 'Please which user details to update',
-          })
+          });
         }
         return res.status(200).send({
           status: res.statusCode,
