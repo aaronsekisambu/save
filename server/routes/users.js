@@ -44,5 +44,12 @@ router.get('/api/v1/users/:id/details',
 	isValid(userValidation.userId),
 	userController.getDetails);
 
+<<<<<<< HEAD
 >>>>>>> [ft-164832221] add user details API
+=======
+router.get('/api/v1/users/:id/loan_history',
+	isValid(userValidation.userId),
+	userController.getUserLoans);
+
+>>>>>>> [ft-164833612] Add loan history API
 export default router;

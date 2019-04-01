@@ -131,7 +131,7 @@ const user = {
       status: res.statusCode,
       message: 'User not found',
     });
-  }
+  },
 
   async getUserLoans(req, res) {
     const loans = await userModel.getUserLoans(req.params.id);
