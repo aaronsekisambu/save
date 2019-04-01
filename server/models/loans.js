@@ -6,9 +6,9 @@ class Loan {
     const {
       userId, amount, transactionDate, transactionCode, comment,
     } = data;
-    const params = [userId, amount, transactionDate, transactionCode, comment];
+    this.params = [userId, amount, transactionDate, transactionCode, comment];
     try {
-      return await this.pool.query(queries.createTransaction, params);
+      return await db.executeQuery(queries.createTransaction, this.params);
     } catch (error) {
       return error;
     }
