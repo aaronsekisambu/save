@@ -4,7 +4,7 @@
   "description": "Loan management application",
   "main": "index.js",
   "scripts": {
-    "start": "node --exec babel-node ./server/index.js",
+    "start": "npm run build && node ./dist/index.js",
     "build": "babel ./server --out-dir dist",
     "serve": "npm run build && node ./dist/index.js",
     "createdb": "babel-node ./server/config/createTables.js",
