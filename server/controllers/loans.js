@@ -1,4 +1,3 @@
-// importing the Loan from models
 import Loan from '../models/loans';
 
 const loan = {
@@ -29,10 +28,26 @@ const loan = {
  */
 
   async payLoan(req, res) {
-    const response = await Loan.payBackLoan(req.body);
+    const { rows } = await Loan.payBackLoan(req.body);
     return res.status(200).send({
       status: res.statusCode,
-      data: response,
+      data: rows,
+    });
+  },
+
+  async checkLoanStatus(req, res) {
+    const { userId, loanId } = req.body;
+    const { rowCount, rows } = await Loan.checkLoanStatus([loanId, userId]);
+
+    if (rowCount > 0) {
+      return res.status(200).send({
+        status: res.statusCode,
+        data: rows,
+      });
+    }
+    return res.status(400).send({
+      status: res.statusCode,
+      data: 'No data for the provided information',
     });
   },
 
@@ -93,7 +108,6 @@ const loan = {
         data: appLoan,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).send({
         status: 500,
         message: 'Error While updating',
@@ -101,4 +115,5 @@ const loan = {
     }
   },
 };
+
 export default loan;

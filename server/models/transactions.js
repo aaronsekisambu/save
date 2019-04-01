@@ -14,10 +14,27 @@ class Transaction {
     ];
     try {
       const queryMoneySaved = queries.createTransaction;
-      const checkMoneySaved = await db.pool.query(queryMoneySaved, this.savedMoney);
+      const checkMoneySaved = await db.executeQuery(queryMoneySaved, this.savedMoney);
       return checkMoneySaved.rows[0];
     } catch (error) {
-      console.log(error);
+      return error;
+    }
+  }
+
+  async approveSaving(data) {
+    this.approvedSaving = [
+      data.userId,
+      data.amount,
+      moment(new Date()),
+      data.transactionCode,
+      data.comment,
+    ];
+    try {
+      const queryUpdateAmount = queries.updateSingleTransaction;
+      const checkAmountUpdated = await db.pool(queryUpdateAmount, this.approvedSaving);
+      return checkAmountUpdated.rows[0];
+    } catch (e) {
+      console.log(e);
       return false;
     }
   }
