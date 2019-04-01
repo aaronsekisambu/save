@@ -21,7 +21,7 @@ const userLogin = {
 };
 
 export default {
-  dcheckUserId,
+  checkUserId,
   userSignup,
   userLogin,
 };
