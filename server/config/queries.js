@@ -154,7 +154,7 @@ const createUserTable = `
                 isAdmin BOOLEAN DEFAULT false,
                 nationality VARCHAR(50),
                 phoneNumber INTEGER,
-                email VARCHAR(255),
+                email VARCHAR(255) NOT NULL UNIQUE,
                 profileImage VARCHAR(255),
                 slackHandle VARCHAR(50),
                 salt TEXT,

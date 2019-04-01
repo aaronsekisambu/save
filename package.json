@@ -4,8 +4,10 @@
   "description": "Loan management application",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node ./server/index.js",
+    "start": "nodemon ./server/index.js --exec babel-node",
+    "start:heroku": "babel-node ./server/index.js",
     "build": "babel ./server --out-dir dist",
+    "heroku-postbuild": "npm install",
     "serve": "npm run build && node ./dist/index.js",
     "createdb": "babel-node ./server/config/createTables.js",
     "test": "nyc --reporter=text mocha --exit --require @babel/register --require @babel/polyfill ./server/tests/*",
