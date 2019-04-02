@@ -154,7 +154,7 @@ const user = {
     const loans = await userModel.getUserLoans(req.params.id);
     let userLoans = 'No loan history found';
     if (loans.rowCount !== 0) {
-      userLoans = loans.rows[0];
+      userLoans = loans.rows;
       return res.status(200).send({
         status: res.statusCode,
         loans: userLoans,

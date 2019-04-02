@@ -76,7 +76,7 @@ const loan = {
       }
 
       const data = [
-        req.body.loanStatus || loanApprove.rows[0].loanStatus,
+        'approved' || loanApprove.rows[0].loanStatus,
         req.params.id,
       ];
 

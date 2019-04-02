@@ -32,7 +32,7 @@ router.get('/api/v1/users/:id/details',
   verifyToken,
   userController.getDetails);
 
-router.get('/api/v1/users/:id/loan_history',
+router.get('/api/v1/users/:id/loan/history',
   isValid(userValidation.checkUserId),
   verifyToken,
   userController.getUserLoans);

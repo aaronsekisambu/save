@@ -25,7 +25,7 @@ const requestLoan = {
 
 const approveLoan = {
   body: {
-    loanStatus: Validate.Joi.string().required().trim(),
+    loanStatus: Validate.Joi.string().trim(),
   },
 };
 
