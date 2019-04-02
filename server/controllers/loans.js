@@ -1,14 +1,21 @@
 import Loan from '../models/loans';
 
 const loan = {
-  // methodes will go here and you need to follow the same method
+  // methods will go here and you need to follow the same method
   async requestLoan(req, res) {
-    await Loan.requestLoan(req.body)
+    const interestRate = 5;
+    const interest = (((req.body.amount * interestRate) / 100) * req.body.paymentPeriod);
+    const totalAmount = (interest + req.body.amount);
+    const loanStatus = 'pending';
+    const startdate = 'Friday, 29 May 2015';
+    await Loan.requestLoan({
+      ...req.body, interest, totalAmount, loanStatus, startdate,
+    })
       .then((loanRes) => {
         if (!loanRes) {
           res.status(400).send({
             status: 400,
-            errorMessage: 'you have to provide all datas',
+            errorMessage: 'you have to provide all data',
           });
         }
         res.status(200).send({

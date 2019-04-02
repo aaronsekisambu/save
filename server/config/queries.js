@@ -165,8 +165,8 @@ const createUserTable = `
 const createLoansTable = `
 	CREATE TABLE IF NOT EXISTS loans(
 		loanId UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-		userId UUID REFERENCES users(userId),
-		guarantor UUID REFERENCES users(userId),
+		userId NOT NULL UUID REFERENCES users(userId),
+		guarantor NOT NULL UUID REFERENCES users(userId),
 		amount INTEGER NOT NULL,
 		interest INTEGER NOT NULL,
 		totalAmount INTEGER NOT NULL,
