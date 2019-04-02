@@ -6,7 +6,9 @@ const user = {
   async createUser(req, res) {
     const { email, password } = req.body;
     const salt = crypto.randomBytes(16).toString('hex');
-    const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+    const hash = crypto
+      .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
+      .toString('hex');
     const response = await userModel.createUser({ email, salt, hash });
 
     if (response.rowCount === 1) {
@@ -21,11 +23,12 @@ const user = {
       });
       return;
     }
-    const message = (response.code === '23505') ? `email ${req.body.email} already exists` : response.detail;
+    const message = response.code === '23505'
+      ? `email ${req.body.email} already exists`
+      : response.detail;
     res.status(400).json({
       status: res.statusCode,
       error: message,
-
     });
   },
 
@@ -70,23 +73,19 @@ const user = {
     }
 
     const {
-      salt, hash, userId, isadmin,
+      salt, hash, userid, isadmin,
     } = response.rows[0];
-    const currentHash = crypto.pbkdf2Sync(
-      password,
-      salt,
-      1000,
-      64,
-      'sha512',
-    ).toString('hex');
+    const currentHash = crypto
+      .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
+      .toString('hex');
 
     if (hash === currentHash) {
-      const token = auth.generateToken({ email, isadmin, userId });
+      const token = auth.generateToken({ email, isadmin, userid });
       res.status(200).json({
         status: res.statusCode,
         token,
         email,
-        userId,
+        userid,
       });
       return;
     }
@@ -105,9 +104,7 @@ const user = {
         message: 'Admin Access is required to approve the loan',
       });
     }
-    const {
-      rowCount,
-    } = await userModel.approveUser(req.params);
+    const { rowCount } = await userModel.approveUser(req.params);
 
     if (rowCount !== 0) {
       return res.status(200).send({
@@ -169,7 +166,6 @@ const user = {
       message: userLoans,
     });
   },
-
 };
 
 export default user;
