@@ -16,7 +16,9 @@ describe('Loan', () => {
       .then(async () => {
         await getToken()
           .then((res) => {
+            token = res.body.token;
             id = res.body.user.userid;
+
           });
       })
       .catch(err => console.log(err));
@@ -25,7 +27,7 @@ describe('Loan', () => {
   after(async () => {
     try {
       // await db.pool.query('TRUNCATE loans CASCADE;');
-      // await db.pool.query('TRUNCATE users CASCADE;');
+      await db.pool.query('TRUNCATE users CASCADE;');
     } catch (error) {
       console.log(error);
     }
@@ -34,8 +36,8 @@ describe('Loan', () => {
   describe('/POST', () => {
     it('should request the loan', (done) => {
       const loan = {
-        userId: 'e52bced4-57c0-4f0f-86ed-27baa2511f17',
-        guarantor: 'e52bced4-57c0-4f0f-86ed-27baa2511f17',
+        userId: id,
+        guarantor: id,
         amount: 2002,
         interest: '33',
         totalAmount: 333,
@@ -45,7 +47,8 @@ describe('Loan', () => {
       };
 
       chai.request('http://localhost:3000')
-        .post('/api/v1/loan/request')
+        .post('/api/v1/loans/request')
+        .set('Authorization', `Bearer ${token}`)
         .send(loan)
         .end((err, res) => {
           res.should.have.status(200);
@@ -65,7 +68,7 @@ describe('Loan', () => {
       };
 
       chai.request('http://localhost:3000')
-        .post('/api/v1/loan/request')
+        .post('/api/v1/loans/request')
         .send(loan)
         .end((err, res) => {
           res.should.have.status(400);
@@ -84,25 +87,28 @@ describe('Loan', () => {
       };
 
       chai.request('http://localhost:3000')
-        .patch('/api/v1/approve/a06638bb-7cb3-4409-b8aa-da6201d8ecb5')
+        .patch(`/api/v1/approve/${id}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(loanApprove)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           done();
         });
     });
 
-    it('should not approve the loan with invalid id', (done) => {
+    // this endpoint requires the admin rights
+    it('should not approve the loan with no admin rights and filled datas', (done) => {
       const loan = {
         loanStatus: 'approved',
       };
 
       chai.request('http://localhost:3000')
         .patch('/api/v1/approve/ndnd')
+        .set('Authorization', `Bearer ${token}`)
         .send(loan)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           res.body.should.be.a('object');
           // res.body.message.should.have();
           done();

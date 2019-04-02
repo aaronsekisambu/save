@@ -3,10 +3,18 @@ sudo: false
 language: node_js
 
 node_js:
-    - stable
+   - stable
+before_script:
+ - psql -c 'create database test_db;' -U postgres
+ - psql -c "create user save_user with PASSWORD 'save_pass';" -U postgres
+ - psql -U postgres test_db -c 'create extension "uuid-ossp";'
 
 script:
-    - npm install coveralls
+  - npm run createdb
+  - npm run test
 
 notification:
-    - email: false
+  - email: false
+
+after_success:
+ - npm run coveralls

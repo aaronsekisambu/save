@@ -17,7 +17,7 @@ const loan = {
           data: loanRes,
         });
       })
-      .catch(err => err);
+      .catch(err => console.log(err));
   },
 
   /**
